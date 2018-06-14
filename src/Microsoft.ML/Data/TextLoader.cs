@@ -56,20 +56,20 @@ namespace Microsoft.ML.Data
         /// <summary>
         /// Construct a TextLoader object by inferencing the dataset schema from a type.
         /// </summary>
-        /// <param name="useHeader">Does the file contains header?</param>
+        /// <param name="header">Does the file contains header?</param>
         /// <param name="separator">Column separator character. Default is '\t'</param>
-        /// <param name="allowQuotedStrings">Whether the input may include quoted values, 
+        /// <param name="allowQuoting">Whether the input may include quoted values, 
         /// which can contain separator characters, colons,
         /// and distinguish empty values from missing values. When true, consecutive separators 
         /// denote a missing value and an empty value is denoted by \"\". 
         /// When false, consecutive separators denote an empty value.</param>
-        /// <param name="supportSparse">Whether the input may include sparse representations e.g. 
+        /// <param name="allowSparse">Whether the input may include sparse representations e.g. 
         /// if one of the row contains "5 2:6 4:3" that's mean there are 5 columns all zero 
         /// except for 3rd and 5th columns which have values 6 and 3</param>
         /// <param name="trimWhitespace">Remove trailing whitespace from lines</param>
-        public TextLoader CreateFrom<TInput>(bool useHeader = false,
-            char separator = '\t', bool allowQuotedStrings = true,
-            bool supportSparse = true, bool trimWhitespace = false)
+        public TextLoader CreateFrom<TInput>(bool header = false,
+            char separator = '\t', bool allowQuoting = true,
+            bool allowSparse = true, bool trimWhitespace = false)
         {
             var fields = typeof(TInput).GetFields();
             Arguments.Column = new TextLoaderColumn[fields.Length];
@@ -117,10 +117,10 @@ namespace Microsoft.ML.Data
                 Arguments.Column[index] = tlc;
             }
 
-            Arguments.HasHeader = useHeader;
+            Arguments.HasHeader = header;
             Arguments.Separator = new[] { separator };
-            Arguments.AllowQuoting = allowQuotedStrings;
-            Arguments.AllowSparse = supportSparse;
+            Arguments.AllowQuoting = allowQuoting;
+            Arguments.AllowSparse = allowSparse;
             Arguments.TrimWhitespace = trimWhitespace;
 
             return this;
