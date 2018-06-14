@@ -19,7 +19,7 @@ namespace Microsoft.ML.Scenarios
 
             var pipeline = new LearningPipeline();
 
-            pipeline.Add(new TextLoader(dataPath).CreateFrom<HousePriceData>(useHeader: true, separator: ','));
+            pipeline.Add(new TextLoader(dataPath).CreateFrom<HousePriceData>(header: true, separator: ','));
 
             pipeline.Add(new ColumnConcatenator(outputColumn: "NumericalFeatures",
                 "SqftLiving", "SqftLot", "SqftAbove", "SqftBasement", "Lat", "Long", "SqftLiving15", "SqftLot15"));
@@ -59,7 +59,7 @@ namespace Microsoft.ML.Scenarios
             Assert.InRange(prediction.Price, 260_000, 330_000);
 
             string testDataPath = GetDataPath("kc_house_test.csv");
-            var testData = new TextLoader(testDataPath).CreateFrom<HousePriceData>(useHeader: true, separator: ',');
+            var testData = new TextLoader(testDataPath).CreateFrom<HousePriceData>(header: true, separator: ',');
 
             var evaluator = new RegressionEvaluator();
             RegressionMetrics metrics = evaluator.Evaluate(model, testData);

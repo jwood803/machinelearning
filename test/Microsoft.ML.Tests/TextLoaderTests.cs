@@ -26,12 +26,12 @@ namespace Microsoft.ML.EntryPoints.Tests
         public void ConstructorDoesntThrow()
         {
             Assert.NotNull(new Data.TextLoader("fakeFile.txt").CreateFrom<Input>());
-            Assert.NotNull(new Data.TextLoader("fakeFile.txt").CreateFrom<Input>(useHeader:true));
+            Assert.NotNull(new Data.TextLoader("fakeFile.txt").CreateFrom<Input>(header: true));
             Assert.NotNull(new Data.TextLoader("fakeFile.txt").CreateFrom<Input>());
-            Assert.NotNull(new Data.TextLoader("fakeFile.txt").CreateFrom<Input>(useHeader: false));
-            Assert.NotNull(new Data.TextLoader("fakeFile.txt").CreateFrom<Input>(useHeader: false, supportSparse: false, trimWhitespace: false));
-            Assert.NotNull(new Data.TextLoader("fakeFile.txt").CreateFrom<Input>(useHeader: false, supportSparse: false));
-            Assert.NotNull(new Data.TextLoader("fakeFile.txt").CreateFrom<Input>(useHeader: false, allowQuotedStrings: false));
+            Assert.NotNull(new Data.TextLoader("fakeFile.txt").CreateFrom<Input>(header: false));
+            Assert.NotNull(new Data.TextLoader("fakeFile.txt").CreateFrom<Input>(header: false, allowSparse: false, trimWhitespace: false));
+            Assert.NotNull(new Data.TextLoader("fakeFile.txt").CreateFrom<Input>(header: false, allowSparse: false));
+            Assert.NotNull(new Data.TextLoader("fakeFile.txt").CreateFrom<Input>(header: false, allowQuoting: false));
 
             Assert.NotNull(new Data.TextLoader("fakeFile.txt").CreateFrom<InputWithUnderscore>());
         }
@@ -57,7 +57,7 @@ namespace Microsoft.ML.EntryPoints.Tests
         public void CanSuccessfullyRetrieveQuotedData()
         {
             string dataPath = GetDataPath("QuotingData.csv");
-            var loader = new Data.TextLoader(dataPath).CreateFrom<QuoteInput>(useHeader: true, separator: ',', allowQuotedStrings: true, supportSparse: false);
+            var loader = new Data.TextLoader(dataPath).CreateFrom<QuoteInput>(header: true, separator: ',', allowQuoting: true, allowSparse: false);
             
             using (var environment = new TlcEnvironment())
             {
@@ -115,7 +115,7 @@ namespace Microsoft.ML.EntryPoints.Tests
         public void CanSuccessfullyRetrieveSparseData()
         {
             string dataPath = GetDataPath("SparseData.txt");
-            var loader = new Data.TextLoader(dataPath).CreateFrom<SparseInput>(useHeader: true, allowQuotedStrings: false, supportSparse: true);
+            var loader = new Data.TextLoader(dataPath).CreateFrom<SparseInput>(header: true, allowQuoting: false, allowSparse: true);
 
             using (var environment = new TlcEnvironment())
             {
@@ -180,7 +180,7 @@ namespace Microsoft.ML.EntryPoints.Tests
         public void CanSuccessfullyTrimSpaces()
         {
             string dataPath = GetDataPath("TrimData.csv");
-            var loader = new Data.TextLoader(dataPath).CreateFrom<QuoteInput>(useHeader: true, separator: ',', allowQuotedStrings: false, supportSparse: false, trimWhitespace: true);
+            var loader = new Data.TextLoader(dataPath).CreateFrom<QuoteInput>(header: true, separator: ',', allowQuoting: false, allowSparse: false, trimWhitespace: true);
 
             using (var environment = new TlcEnvironment())
             {

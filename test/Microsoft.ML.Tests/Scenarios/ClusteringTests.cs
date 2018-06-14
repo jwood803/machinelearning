@@ -18,7 +18,7 @@ namespace Microsoft.ML.Scenarios
             string dataPath = GetDataPath(@"external/20newsgroups.txt");
 
             var pipeline = new LearningPipeline(seed: 1, conc: 1);
-            pipeline.Add(new TextLoader(dataPath).CreateFrom<NewsData>(useHeader: false, allowQuotedStrings: true, supportSparse: false));
+            pipeline.Add(new TextLoader(dataPath).CreateFrom<NewsData>(header: false, allowQuoting: true, allowSparse: false));
             pipeline.Add(new ColumnConcatenator("AllText", "Subject", "Content"));
             pipeline.Add(new TextFeaturizer("Features", "AllText")
             {
