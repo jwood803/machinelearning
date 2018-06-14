@@ -19,7 +19,7 @@ namespace Microsoft.ML.Runtime.Internal.Internallearn
     {
         public const string NormalizerWarningFormat =
             "Ignoring integrated normalizer while loading a predictor of type {0}.{1}" +
-            "   Please refer https://aka.ms/MLNetIssue for assistance with converting legacy models.";
+            "   Please refer to https://aka.ms/MLNetIssue for assistance with converting legacy models.";
 
         protected readonly IHost Host;
 
