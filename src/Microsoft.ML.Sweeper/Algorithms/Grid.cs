@@ -80,7 +80,11 @@ namespace Microsoft.ML.Runtime.Sweeper
                     (AlreadyGenerated(paramSet, prevParamSets) || AlreadyGenerated(paramSet, result)));
 
                 Contracts.Assert(paramSet != null);
-                result.Add(paramSet);
+
+                if (!result.Contains(paramSet))
+                {
+                    result.Add(paramSet);
+                }
             }
 
             return result.ToArray();
@@ -173,7 +177,12 @@ namespace Microsoft.ML.Runtime.Sweeper
                     if (!AlreadyGenerated(_cache[iPerm], prevParamSets))
                         break;
                 }
-                result.Add(_cache[iPerm]);
+
+                if(!_cache.Contains(_cache[iPerm]))
+                {
+                    result.Add(_cache[iPerm]);
+                }
+
             }
             return result.ToArray();
         }
