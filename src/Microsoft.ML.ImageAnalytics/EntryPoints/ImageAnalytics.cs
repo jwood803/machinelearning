@@ -3,13 +3,12 @@
 // See the LICENSE file in the project root for more information.
 
 using Microsoft.ML;
-using Microsoft.ML.Data;
 using Microsoft.ML.EntryPoints;
+using Microsoft.ML.ImageAnalytics;
 using Microsoft.ML.Runtime;
-using Microsoft.ML.Transforms.Image;
 
 [assembly: LoadableClass(typeof(void), typeof(ImageAnalyticsEntryPoints), null, typeof(SignatureEntryPointModule), "ImageAnalytics")]
-namespace Microsoft.ML.Transforms.Image
+namespace Microsoft.ML.ImageAnalytics
 {
     internal static class ImageAnalyticsEntryPoints
     {

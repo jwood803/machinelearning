@@ -20,7 +20,7 @@ namespace Microsoft.ML.Samples.Dynamic.PermutationFeatureImportance
             // Then append a linear regression trainer.
             var pipeline = mlContext.Transforms.Concatenate("Features", featureNames)
                     .Append(mlContext.Transforms.Normalize("Features"))
-                    .Append(mlContext.Regression.Trainers.Ols(
+                    .Append(mlContext.Regression.Trainers.OrdinaryLeastSquares(
                         labelColumnName: labelName, featureColumnName: "Features"));
             var model = pipeline.Fit(data);
 

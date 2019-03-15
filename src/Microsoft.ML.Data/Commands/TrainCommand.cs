@@ -25,8 +25,7 @@ namespace Microsoft.ML.Data
 {
     using ColumnRole = RoleMappedSchema.ColumnRole;
 
-    [BestFriend]
-    internal enum NormalizeOption
+    public enum NormalizeOption
     {
         No,
         Warn,

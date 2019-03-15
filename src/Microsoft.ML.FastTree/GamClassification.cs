@@ -14,12 +14,12 @@ using Microsoft.ML.Model;
 using Microsoft.ML.Runtime;
 using Microsoft.ML.Trainers.FastTree;
 
-[assembly: LoadableClass(GamBinaryClassificationTrainer.Summary,
-    typeof(GamBinaryClassificationTrainer), typeof(GamBinaryClassificationTrainer.Options),
+[assembly: LoadableClass(BinaryClassificationGamTrainer.Summary,
+    typeof(BinaryClassificationGamTrainer), typeof(BinaryClassificationGamTrainer.Options),
     new[] { typeof(SignatureBinaryClassifierTrainer), typeof(SignatureTrainer), typeof(SignatureFeatureScorerTrainer) },
-    GamBinaryClassificationTrainer.UserNameValue,
-    GamBinaryClassificationTrainer.LoadNameValue,
-    GamBinaryClassificationTrainer.ShortName, DocName = "trainer/GAM.md")]
+    BinaryClassificationGamTrainer.UserNameValue,
+    BinaryClassificationGamTrainer.LoadNameValue,
+    BinaryClassificationGamTrainer.ShortName, DocName = "trainer/GAM.md")]
 
 [assembly: LoadableClass(typeof(IPredictorProducing<float>), typeof(BinaryClassificationGamModelParameters), null, typeof(SignatureLoadModel),
     "GAM Binary Class Predictor",
@@ -27,23 +27,13 @@ using Microsoft.ML.Trainers.FastTree;
 
 namespace Microsoft.ML.Trainers.FastTree
 {
-    /// <summary>
-    /// The <see cref="IEstimator{TTransformer}"/> for training a binary classification model with generalized additive models (GAM).
-    /// </summary>
-    /// <include file='doc.xml' path='doc/members/member[@name="GAM_remarks"]/*' />
-    public sealed class GamBinaryClassificationTrainer :
-        GamTrainerBase<GamBinaryClassificationTrainer.Options,
+    public sealed class BinaryClassificationGamTrainer :
+        GamTrainerBase<BinaryClassificationGamTrainer.Options,
         BinaryPredictionTransformer<CalibratedModelParametersBase<BinaryClassificationGamModelParameters, PlattCalibrator>>,
         CalibratedModelParametersBase<BinaryClassificationGamModelParameters, PlattCalibrator>>
     {
-        /// <summary>
-        /// Options for the <see cref="GamBinaryClassificationTrainer"/>.
-        /// </summary>
         public sealed class Options : OptionsBase
         {
-            /// <summary>
-            /// Whether to use derivatives optimized for unbalanced training data.
-            /// </summary>
             [Argument(ArgumentType.LastOccurenceWins, HelpText = "Should we use derivatives optimized for unbalanced sets", ShortName = "us")]
             [TGUI(Label = "Optimize for unbalanced")]
             public bool UnbalancedSets = false;
@@ -58,16 +48,16 @@ namespace Microsoft.ML.Trainers.FastTree
         private protected override bool NeedCalibration => true;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="GamBinaryClassificationTrainer"/>
+        /// Initializes a new instance of <see cref="BinaryClassificationGamTrainer"/>
         /// </summary>
-        internal GamBinaryClassificationTrainer(IHostEnvironment env, Options options)
+        internal BinaryClassificationGamTrainer(IHostEnvironment env, Options options)
              : base(env, options, LoadNameValue, TrainerUtils.MakeBoolScalarLabel(options.LabelColumnName))
         {
             _sigmoidParameter = 1;
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="GamBinaryClassificationTrainer"/>
+        /// Initializes a new instance of <see cref="BinaryClassificationGamTrainer"/>
         /// </summary>
         /// <param name="env">The private instance of <see cref="IHostEnvironment"/>.</param>
         /// <param name="labelColumnName">The name of the label column.</param>
@@ -76,7 +66,7 @@ namespace Microsoft.ML.Trainers.FastTree
         /// <param name="numberOfIterations">The number of iterations to use in learning the features.</param>
         /// <param name="learningRate">The learning rate. GAMs work best with a small learning rate.</param>
         /// <param name="maximumBinCountPerFeature">The maximum number of bins to use to approximate features</param>
-        internal GamBinaryClassificationTrainer(IHostEnvironment env,
+        internal BinaryClassificationGamTrainer(IHostEnvironment env,
             string labelColumnName = DefaultColumnNames.Label,
             string featureColumnName = DefaultColumnNames.Features,
             string rowGroupColumnName = null,
@@ -152,7 +142,7 @@ namespace Microsoft.ML.Trainers.FastTree
             => new BinaryPredictionTransformer<CalibratedModelParametersBase<BinaryClassificationGamModelParameters, PlattCalibrator>>(Host, model, trainSchema, FeatureColumn.Name);
 
         /// <summary>
-        /// Trains a <see cref="GamBinaryClassificationTrainer"/> using both training and validation data, returns
+        /// Trains a <see cref="BinaryClassificationGamTrainer"/> using both training and validation data, returns
         /// a <see cref="BinaryPredictionTransformer{CalibratedModelParametersBase}"/>.
         /// </summary>
         public BinaryPredictionTransformer<CalibratedModelParametersBase<BinaryClassificationGamModelParameters, PlattCalibrator>> Fit(IDataView trainData, IDataView validationData)
@@ -182,11 +172,11 @@ namespace Microsoft.ML.Trainers.FastTree
         /// </summary>
         /// <param name="env">The Host Environment</param>
         /// <param name="binUpperBounds">An array of arrays of bin-upper-bounds for each feature.</param>
-        /// <param name="binEffects">An array of arrays of effect sizes for each bin for each feature.</param>
+        /// <param name="binEffects">Anay array of arrays of effect sizes for each bin for each feature.</param>
         /// <param name="intercept">The intercept term for the model. Also referred to as the bias or the mean effect.</param>
         /// <param name="inputLength">The number of features passed from the dataset. Used when the number of input features is
         /// different than the number of shape functions. Use default if all features have a shape function.</param>
-        /// <param name="featureToInputMap">A map from the feature shape functions, as described by <paramref name="binUpperBounds"/> and <paramref name="binEffects"/>.
+        /// <param name="featureToInputMap">A map from the feature shape functions (as described by the binUpperBounds and BinEffects)
         /// to the input feature. Used when the number of input features is different than the number of shape functions. Use default if all features have
         /// a shape function.</param>
         internal BinaryClassificationGamModelParameters(IHostEnvironment env,

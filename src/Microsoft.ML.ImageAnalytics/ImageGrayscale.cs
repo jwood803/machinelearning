@@ -12,9 +12,10 @@ using Microsoft.Data.DataView;
 using Microsoft.ML;
 using Microsoft.ML.CommandLine;
 using Microsoft.ML.Data;
+using Microsoft.ML.ImageAnalytics;
 using Microsoft.ML.Internal.Utilities;
 using Microsoft.ML.Runtime;
-using Microsoft.ML.Transforms.Image;
+using Microsoft.ML.Transforms;
 
 [assembly: LoadableClass(ImageGrayscalingTransformer.Summary, typeof(IDataTransform), typeof(ImageGrayscalingTransformer), typeof(ImageGrayscalingTransformer.Options), typeof(SignatureDataTransform),
     ImageGrayscalingTransformer.UserName, "ImageGrayscaleTransform", "ImageGrayscale")]
@@ -28,7 +29,7 @@ using Microsoft.ML.Transforms.Image;
 [assembly: LoadableClass(typeof(IRowMapper), typeof(ImageGrayscalingTransformer), null, typeof(SignatureLoadRowMapper),
     ImageGrayscalingTransformer.UserName, ImageGrayscalingTransformer.LoaderSignature)]
 
-namespace Microsoft.ML.Transforms.Image
+namespace Microsoft.ML.ImageAnalytics
 {
     // REVIEW: Rewrite as LambdaTransform to simplify.
     // REVIEW: Should it be separate transform or part of ImageResizerTransform?
@@ -91,7 +92,7 @@ namespace Microsoft.ML.Transforms.Image
         /// <summary>
         /// The input and output column pairs passed to this <see cref="ITransformer"/>.
         /// </summary>
-        internal IReadOnlyCollection<(string outputColumnName, string inputColumnName)> Columns => ColumnPairs.AsReadOnly();
+        public IReadOnlyCollection<(string outputColumnName, string inputColumnName)> Columns => ColumnPairs.AsReadOnly();
 
         /// <summary>
         /// Converts the images to grayscale.

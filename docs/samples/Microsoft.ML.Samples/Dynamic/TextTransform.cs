@@ -36,7 +36,7 @@ namespace Microsoft.ML.Samples.Dynamic
                 KeepPunctuations = false,
                 KeepNumbers = false,
                 OutputTokens = true,
-                Language = TextFeaturizingEstimator.Language.English, // supports  English, French, German, Dutch, Italian, Spanish, Japanese
+                TextLanguage = TextFeaturizingEstimator.Language.English, // supports  English, French, German, Dutch, Italian, Spanish, Japanese
             }, "SentimentText");
 
             // The transformed data for both pipelines.

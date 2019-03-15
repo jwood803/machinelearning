@@ -19,7 +19,7 @@ namespace Microsoft.ML
         Custom = 1,
 
         BinaryClassification = 2,
-        MulticlassClassification = 3,
+        MultiClassClassification = 3,
         Regression = 4,
         MultiOutputRegression = 5,
         Ranking = 6,

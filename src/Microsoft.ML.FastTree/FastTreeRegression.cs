@@ -30,10 +30,7 @@ using Microsoft.ML.Trainers.FastTree;
 
 namespace Microsoft.ML.Trainers.FastTree
 {
-    /// <summary>
-    /// The <see cref="IEstimator{TTransformer}"/> for training a decision tree regression model using FastTree.
-    /// </summary>
-    /// <include file='doc.xml' path='doc/members/member[@name="FastTree_remarks"]/*' />
+    /// <include file='doc.xml' path='doc/members/member[@name="FastTree"]/*' />
     public sealed partial class FastTreeRegressionTrainer
         : BoostingFastTreeTrainerBase<FastTreeRegressionTrainer.Options, RegressionPredictionTransformer<FastTreeRegressionModelParameters>, FastTreeRegressionModelParameters>
     {
@@ -394,7 +391,7 @@ namespace Microsoft.ML.Trainers.FastTree
         {
             private readonly float[] _labels;
 
-            public ObjectiveImpl(Dataset trainData, GamRegressionTrainer.Options options) :
+            public ObjectiveImpl(Dataset trainData, RegressionGamTrainer.Options options) :
                 base(
                     trainData,
                     options.LearningRate,

@@ -39,10 +39,7 @@ using Microsoft.ML.Trainers.FastTree;
 
 namespace Microsoft.ML.Trainers.FastTree
 {
-    /// <summary>
-    /// The <see cref="IEstimator{TTransformer}"/> for training a decision tree ranking model using FastTree.
-    /// </summary>
-    /// <include file='doc.xml' path='doc/members/member[@name="FastTree_remarks"]/*' />
+    /// <include file='doc.xml' path='doc/members/member[@name="FastTree"]/*' />
     public sealed partial class FastTreeRankingTrainer
         : BoostingFastTreeTrainerBase<FastTreeRankingTrainer.Options, RankingPredictionTransformer<FastTreeRankingModelParameters>, FastTreeRankingModelParameters>
     {
@@ -108,7 +105,6 @@ namespace Microsoft.ML.Trainers.FastTree
             if (!labelCol.IsKey && labelCol.ItemType != NumberDataViewType.Single)
                 error();
         }
-
         private protected override float GetMaxLabel()
         {
             return GetLabelGains().Length - 1;

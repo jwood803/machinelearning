@@ -50,9 +50,8 @@ namespace Microsoft.ML.Transforms
     {
         public abstract class ColumnBase : OneToOneColumn
         {
-            [Argument(ArgumentType.AtMostOnce, HelpText = "Max number of examples used to train the normalizer",
-                Name = "MaxTrainingExamples", ShortName = "maxtrain")]
-            public long? MaximumExampleCount;
+            [Argument(ArgumentType.AtMostOnce, HelpText = "Max number of examples used to train the normalizer", ShortName = "maxtrain")]
+            public long? MaxTrainingExamples;
 
             private protected ColumnBase()
             {
@@ -61,29 +60,29 @@ namespace Microsoft.ML.Transforms
             private protected override bool TryUnparseCore(StringBuilder sb)
             {
                 Contracts.AssertValue(sb);
-                if (MaximumExampleCount != null)
+                if (MaxTrainingExamples != null)
                     return false;
                 return base.TryUnparseCore(sb);
             }
         }
 
         // REVIEW: Support different aggregators on different columns, eg, MinMax vs Variance/ZScore.
-        public abstract class ControlZeroColumnBase : ColumnBase
+        public abstract class FixZeroColumnBase : ColumnBase
         {
             // REVIEW: This only allows mapping either zero or min to zero. It might make sense to allow also max, midpoint and mean to be mapped to zero.
-            [Argument(ArgumentType.AtMostOnce, Name="FixZero", HelpText = "Whether to map zero to zero, preserving sparsity", ShortName = "zero")]
-            public bool? EnsureZeroUntouched;
+            [Argument(ArgumentType.AtMostOnce, HelpText = "Whether to map zero to zero, preserving sparsity", ShortName = "zero")]
+            public bool? FixZero;
 
             private protected override bool TryUnparseCore(StringBuilder sb)
             {
                 Contracts.AssertValue(sb);
-                if (EnsureZeroUntouched != null)
+                if (FixZero != null)
                     return false;
                 return base.TryUnparseCore(sb);
             }
         }
 
-        public sealed class AffineColumn : ControlZeroColumnBase
+        public sealed class AffineColumn : FixZeroColumnBase
         {
             internal static AffineColumn Parse(string str)
             {
@@ -102,7 +101,7 @@ namespace Microsoft.ML.Transforms
             }
         }
 
-        public sealed class BinColumn : ControlZeroColumnBase
+        public sealed class BinColumn : FixZeroColumnBase
         {
             [Argument(ArgumentType.AtMostOnce, HelpText = "Max number of bins, power of 2 recommended", ShortName = "bins")]
             [TGUI(Label = "Max number of bins")]
@@ -148,22 +147,22 @@ namespace Microsoft.ML.Transforms
 
         private static class Defaults
         {
-            public const bool EnsureZeroUntouched = true;
+            public const bool FixZero = true;
             public const bool MeanVarCdf = false;
             public const bool LogMeanVarCdf = true;
             public const int NumBins = 1024;
             public const int MinBinSize = 10;
         }
 
-        public abstract class ControlZeroArgumentsBase : ArgumentsBase
+        public abstract class FixZeroArgumentsBase : ArgumentsBase
         {
             // REVIEW: This only allows mapping either zero or min to zero. It might make sense to allow also max, midpoint and mean to be mapped to zero.
             // REVIEW: Convert this to bool? or even an enum{Auto, No, Yes}, and automatically map zero to zero when it is null/Auto.
-            [Argument(ArgumentType.AtMostOnce, Name = "FixZero", HelpText = "Whether to map zero to zero, preserving sparsity", ShortName = "zero")]
-            public bool EnsureZeroUntouched = Defaults.EnsureZeroUntouched;
+            [Argument(ArgumentType.AtMostOnce, HelpText = "Whether to map zero to zero, preserving sparsity", ShortName = "zero")]
+            public bool FixZero = Defaults.FixZero;
         }
 
-        public abstract class AffineArgumentsBase : ControlZeroArgumentsBase
+        public abstract class AffineArgumentsBase : FixZeroArgumentsBase
         {
             [Argument(ArgumentType.Multiple | ArgumentType.Required, HelpText = "New column definition(s) (optional form: name:src)", Name = "Column", ShortName = "col", SortOrder = 1)]
             public AffineColumn[] Columns;
@@ -183,9 +182,8 @@ namespace Microsoft.ML.Transforms
 
         public abstract class ArgumentsBase : TransformInputBase
         {
-            [Argument(ArgumentType.AtMostOnce, HelpText = "Max number of examples used to train the normalizer",
-                Name = "MaxTrainingExamples", ShortName = "maxtrain")]
-            public long MaximumExampleCount = 1000000000;
+            [Argument(ArgumentType.AtMostOnce, HelpText = "Max number of examples used to train the normalizer", ShortName = "maxtrain")]
+            public long MaxTrainingExamples = 1000000000;
 
             public abstract OneToOneColumn[] GetColumns();
 
@@ -219,7 +217,7 @@ namespace Microsoft.ML.Transforms
             public override OneToOneColumn[] GetColumns() => Columns;
         }
 
-        public abstract class BinArgumentsBase : ControlZeroArgumentsBase
+        public abstract class BinArgumentsBase : FixZeroArgumentsBase
         {
             [Argument(ArgumentType.Multiple, HelpText = "New column definition(s) (optional form: name:src)", Name = "Column", ShortName = "col", SortOrder = 1)]
             public BinColumn[] Columns;
@@ -293,8 +291,8 @@ namespace Microsoft.ML.Transforms
                 .Select(col => new NormalizingEstimator.MinMaxColumnOptions(
                     col.Name,
                     col.Source ?? col.Name,
-                    col.MaximumExampleCount ?? args.MaximumExampleCount,
-                    col.EnsureZeroUntouched ?? args.EnsureZeroUntouched))
+                    col.MaxTrainingExamples ?? args.MaxTrainingExamples,
+                    col.FixZero ?? args.FixZero))
                 .ToArray();
             var normalizer = new NormalizingEstimator(env, columns);
             return normalizer.Fit(input).MakeDataTransform(input);
@@ -308,11 +306,11 @@ namespace Microsoft.ML.Transforms
             env.CheckValue(args.Columns, nameof(args.Columns));
 
             var columns = args.Columns
-                .Select(col => new NormalizingEstimator.MeanVarianceColumnOptions(
+                .Select(col => new NormalizingEstimator.MeanVarColumnOptions(
                     col.Name,
                     col.Source ?? col.Name,
-                    col.MaximumExampleCount ?? args.MaximumExampleCount,
-                    col.EnsureZeroUntouched ?? args.EnsureZeroUntouched))
+                    col.MaxTrainingExamples ?? args.MaxTrainingExamples,
+                    col.FixZero ?? args.FixZero))
                 .ToArray();
             var normalizer = new NormalizingEstimator(env, columns);
             return normalizer.Fit(input).MakeDataTransform(input);
@@ -328,10 +326,10 @@ namespace Microsoft.ML.Transforms
             env.CheckValue(args.Columns, nameof(args.Columns));
 
             var columns = args.Columns
-                .Select(col => new NormalizingEstimator.LogMeanVarianceColumnOptions(
+                .Select(col => new NormalizingEstimator.LogMeanVarColumnOptions(
                     col.Name,
                     col.Source ?? col.Name,
-                    col.MaximumExampleCount ?? args.MaximumExampleCount,
+                    col.MaxTrainingExamples ?? args.MaxTrainingExamples,
                     args.UseCdf))
                 .ToArray();
             var normalizer = new NormalizingEstimator(env, columns);
@@ -351,8 +349,8 @@ namespace Microsoft.ML.Transforms
                 .Select(col => new NormalizingEstimator.BinningColumnOptions(
                     col.Name,
                     col.Source ?? col.Name,
-                    col.MaximumExampleCount ?? args.MaximumExampleCount,
-                    col.EnsureZeroUntouched ?? args.EnsureZeroUntouched,
+                    col.MaxTrainingExamples ?? args.MaxTrainingExamples,
+                    col.FixZero ?? args.FixZero,
                     col.NumBins ?? args.NumBins))
                 .ToArray();
             var normalizer = new NormalizingEstimator(env, columns);
@@ -929,8 +927,8 @@ namespace Microsoft.ML.Transforms
                 return CreateBuilder(new NormalizingEstimator.MinMaxColumnOptions(
                     args.Columns[icol].Name,
                     args.Columns[icol].Source ?? args.Columns[icol].Name,
-                    args.Columns[icol].MaximumExampleCount ?? args.MaximumExampleCount,
-                    args.Columns[icol].EnsureZeroUntouched ?? args.EnsureZeroUntouched), host, srcIndex, srcType, cursor);
+                    args.Columns[icol].MaxTrainingExamples ?? args.MaxTrainingExamples,
+                    args.Columns[icol].FixZero ?? args.FixZero), host, srcIndex, srcType, cursor);
             }
 
             public static IColumnFunctionBuilder CreateBuilder(NormalizingEstimator.MinMaxColumnOptions column, IHost host,
@@ -963,15 +961,15 @@ namespace Microsoft.ML.Transforms
                 Contracts.AssertValue(host);
                 host.AssertValue(args);
 
-                return CreateBuilder(new NormalizingEstimator.MeanVarianceColumnOptions(
+                return CreateBuilder(new NormalizingEstimator.MeanVarColumnOptions(
                     args.Columns[icol].Name,
                     args.Columns[icol].Source ?? args.Columns[icol].Name,
-                    args.Columns[icol].MaximumExampleCount ?? args.MaximumExampleCount,
-                    args.Columns[icol].EnsureZeroUntouched ?? args.EnsureZeroUntouched,
+                    args.Columns[icol].MaxTrainingExamples ?? args.MaxTrainingExamples,
+                    args.Columns[icol].FixZero ?? args.FixZero,
                     args.UseCdf), host, srcIndex, srcType, cursor);
             }
 
-            public static IColumnFunctionBuilder CreateBuilder(NormalizingEstimator.MeanVarianceColumnOptions column, IHost host,
+            public static IColumnFunctionBuilder CreateBuilder(NormalizingEstimator.MeanVarColumnOptions column, IHost host,
                 int srcIndex, DataViewType srcType, DataViewRowCursor cursor)
             {
                 Contracts.AssertValue(host);
@@ -1003,14 +1001,14 @@ namespace Microsoft.ML.Transforms
                 Contracts.AssertValue(host);
                 host.AssertValue(args);
 
-                return CreateBuilder(new NormalizingEstimator.LogMeanVarianceColumnOptions(
+                return CreateBuilder(new NormalizingEstimator.LogMeanVarColumnOptions(
                     args.Columns[icol].Name,
                     args.Columns[icol].Source ?? args.Columns[icol].Name,
-                    args.Columns[icol].MaximumExampleCount ?? args.MaximumExampleCount,
+                    args.Columns[icol].MaxTrainingExamples ?? args.MaxTrainingExamples,
                     args.UseCdf), host, srcIndex, srcType, cursor);
             }
 
-            public static IColumnFunctionBuilder CreateBuilder(NormalizingEstimator.LogMeanVarianceColumnOptions column, IHost host,
+            public static IColumnFunctionBuilder CreateBuilder(NormalizingEstimator.LogMeanVarColumnOptions column, IHost host,
                 int srcIndex, DataViewType srcType, DataViewRowCursor cursor)
             {
                 Contracts.AssertValue(host);
@@ -1046,8 +1044,8 @@ namespace Microsoft.ML.Transforms
                 return CreateBuilder(new NormalizingEstimator.BinningColumnOptions(
                     args.Columns[icol].Name,
                     args.Columns[icol].Source ?? args.Columns[icol].Name,
-                    args.Columns[icol].MaximumExampleCount ?? args.MaximumExampleCount,
-                    args.Columns[icol].EnsureZeroUntouched ?? args.EnsureZeroUntouched,
+                    args.Columns[icol].MaxTrainingExamples ?? args.MaxTrainingExamples,
+                    args.Columns[icol].FixZero ?? args.FixZero,
                     args.Columns[icol].NumBins ?? args.NumBins), host, srcIndex, srcType, cursor);
             }
 
@@ -1097,8 +1095,8 @@ namespace Microsoft.ML.Transforms
                         args.Columns[icol].Name,
                         args.Columns[icol].Source ?? args.Columns[icol].Name,
                         args.LabelColumn ?? DefaultColumnNames.Label,
-                        args.Columns[icol].MaximumExampleCount ?? args.MaximumExampleCount,
-                        args.Columns[icol].EnsureZeroUntouched ?? args.EnsureZeroUntouched,
+                        args.Columns[icol].MaxTrainingExamples ?? args.MaxTrainingExamples,
+                        args.Columns[icol].FixZero ?? args.FixZero,
                         args.Columns[icol].NumBins ?? args.NumBins,
                         args.MinBinSize),
                     host, labelColumnId, srcIndex, srcType, cursor);

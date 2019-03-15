@@ -17,7 +17,7 @@ namespace Microsoft.ML.Trainers
         Double Loss(TOutput output, TLabel label);
     }
 
-    public interface IScalarLoss : ILossFunction<float, float>
+    public interface IScalarOutputLoss : ILossFunction<float, float>
     {
         /// <summary>
         /// Derivative of the loss function with respect to output
@@ -26,22 +26,20 @@ namespace Microsoft.ML.Trainers
     }
 
     [TlcModule.ComponentKind("RegressionLossFunction")]
-    [BestFriend]
-    internal interface ISupportRegressionLossFactory : IComponentFactory<IRegressionLoss>
+    public interface ISupportRegressionLossFactory : IComponentFactory<IRegressionLoss>
     {
     }
 
-    public interface IRegressionLoss : IScalarLoss
+    public interface IRegressionLoss : IScalarOutputLoss
     {
     }
 
     [TlcModule.ComponentKind("ClassificationLossFunction")]
-    [BestFriend]
-    internal interface ISupportClassificationLossFactory : IComponentFactory<IClassificationLoss>
+    public interface ISupportClassificationLossFactory : IComponentFactory<IClassificationLoss>
     {
     }
 
-    public interface IClassificationLoss : IScalarLoss
+    public interface IClassificationLoss : IScalarOutputLoss
     {
     }
 

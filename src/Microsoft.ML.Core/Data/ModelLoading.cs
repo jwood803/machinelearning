@@ -29,20 +29,13 @@ namespace Microsoft.ML
         {
             get
             {
-                string[] nameDetails = LoaderAssemblyName.Split(',');
-                switch (nameDetails[0])
+                switch (LoaderAssemblyName)
                 {
                     case "Microsoft.ML.HalLearners":
-                        nameDetails[0] = "Microsoft.ML.Mkl.Components";
-                        break;
-                    case "Microsoft.ML.StandardLearners":
-                        nameDetails[0] = "Microsoft.ML.StandardTrainers";
-                        break;
+                        return "Microsoft.ML.Mkl.Components";
                     default:
                         return LoaderAssemblyName;
                 }
-
-                return string.Join(",", nameDetails);
             }
         }
 

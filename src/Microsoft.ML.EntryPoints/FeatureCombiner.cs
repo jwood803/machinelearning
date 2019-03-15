@@ -253,7 +253,7 @@ namespace Microsoft.ML.EntryPoints
                         Name = input.LabelColumn,
                         Source = input.LabelColumn,
                         TextKeyValues = input.TextKeyValues,
-                        Sort = ValueToKeyMappingEstimator.KeyOrdinality.ByValue
+                        Sort = ValueToKeyMappingEstimator.SortOrder.Value
                     }
                 }
             };

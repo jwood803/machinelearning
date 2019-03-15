@@ -29,7 +29,7 @@ namespace Microsoft.ML.Samples.Dynamic
             string outputColumnName = "Features";
             var pipeline = ml.Transforms.Concatenate(outputColumnName, new[] { "Age", "Parity", "Induced" })
                 .Append(ml.Clustering.Trainers.KMeans(
-                    new KMeansTrainer.Options
+                    new KMeansPlusPlusTrainer.Options
                     {
                         FeatureColumnName = outputColumnName,
                         NumberOfClusters = 2,

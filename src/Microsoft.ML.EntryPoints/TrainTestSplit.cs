@@ -97,7 +97,7 @@ namespace Microsoft.ML.EntryPoints
                     {
                         Columns = new[] { new HashJoiningTransform.Column { Name = stratCol, Source = stratificationColumn } },
                         Join = true,
-                        NumberOfBits = 30
+                        HashBits = 30
                     }, data);
             }
 

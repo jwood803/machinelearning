@@ -11,12 +11,12 @@ using Microsoft.ML.Model;
 using Microsoft.ML.Runtime;
 using Microsoft.ML.Trainers.FastTree;
 
-[assembly: LoadableClass(GamRegressionTrainer.Summary,
-    typeof(GamRegressionTrainer), typeof(GamRegressionTrainer.Options),
+[assembly: LoadableClass(RegressionGamTrainer.Summary,
+    typeof(RegressionGamTrainer), typeof(RegressionGamTrainer.Options),
     new[] { typeof(SignatureRegressorTrainer), typeof(SignatureTrainer), typeof(SignatureFeatureScorerTrainer) },
-    GamRegressionTrainer.UserNameValue,
-    GamRegressionTrainer.LoadNameValue,
-    GamRegressionTrainer.ShortName, DocName = "trainer/GAM.md")]
+    RegressionGamTrainer.UserNameValue,
+    RegressionGamTrainer.LoadNameValue,
+    RegressionGamTrainer.ShortName, DocName = "trainer/GAM.md")]
 
 [assembly: LoadableClass(typeof(RegressionGamModelParameters), null, typeof(SignatureLoadModel),
     "GAM Regression Predictor",
@@ -24,23 +24,10 @@ using Microsoft.ML.Trainers.FastTree;
 
 namespace Microsoft.ML.Trainers.FastTree
 {
-    /// <summary>
-    /// The <see cref="IEstimator{TTransformer}"/> for training a regression model with generalized additive models (GAM).
-    /// </summary>
-    /// <include file='doc.xml' path='doc/members/member[@name="GAM_remarks"]/*' />
-    public sealed class GamRegressionTrainer : GamTrainerBase<GamRegressionTrainer.Options, RegressionPredictionTransformer<RegressionGamModelParameters>, RegressionGamModelParameters>
+    public sealed class RegressionGamTrainer : GamTrainerBase<RegressionGamTrainer.Options, RegressionPredictionTransformer<RegressionGamModelParameters>, RegressionGamModelParameters>
     {
-        /// <summary>
-        /// Options for the <see cref="GamRegressionTrainer"/>.
-        /// </summary>
         public partial class Options : OptionsBase
         {
-            /// <summary>
-            /// Determines what metric to use for pruning.
-            /// </summary>
-            /// <value>
-            /// 1 means use least absolute deviation; 2 means use least squares. Default is 2.
-            /// </value>
             [Argument(ArgumentType.AtMostOnce, HelpText = "Metric for pruning. (For regression, 1: L1, 2:L2; default L2)", ShortName = "pmetric")]
             [TGUI(Description = "Metric for pruning. (For regression, 1: L1, 2:L2; default L2")]
             public int PruningMetrics = 2;
@@ -52,7 +39,7 @@ namespace Microsoft.ML.Trainers.FastTree
 
         private protected override PredictionKind PredictionKind => PredictionKind.Regression;
 
-        internal GamRegressionTrainer(IHostEnvironment env, Options options)
+        internal RegressionGamTrainer(IHostEnvironment env, Options options)
              : base(env, options, LoadNameValue, TrainerUtils.MakeR4ScalarColumn(options.LabelColumnName)) { }
 
         /// <summary>
@@ -65,7 +52,7 @@ namespace Microsoft.ML.Trainers.FastTree
         /// <param name="numberOfIterations">The number of iterations to use in learning the features.</param>
         /// <param name="learningRate">The learning rate. GAMs work best with a small learning rate.</param>
         /// <param name="maximumBinCountPerFeature">The maximum number of bins to use to approximate features</param>
-        internal GamRegressionTrainer(IHostEnvironment env,
+        internal RegressionGamTrainer(IHostEnvironment env,
             string labelColumnName = DefaultColumnNames.Label,
             string featureColumnName = DefaultColumnNames.Features,
             string rowGroupColumnName = null,
@@ -104,7 +91,7 @@ namespace Microsoft.ML.Trainers.FastTree
             => new RegressionPredictionTransformer<RegressionGamModelParameters>(Host, model, trainSchema, FeatureColumn.Name);
 
         /// <summary>
-        /// Trains a <see cref="GamRegressionTrainer"/> using both training and validation data, returns
+        /// Trains a <see cref="RegressionGamTrainer"/> using both training and validation data, returns
         /// a <see cref="RegressionPredictionTransformer{RegressionGamModelParameters}"/>.
         /// </summary>
         public RegressionPredictionTransformer<RegressionGamModelParameters> Fit(IDataView trainData, IDataView validationData)

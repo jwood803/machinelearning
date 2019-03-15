@@ -16,20 +16,20 @@ using Microsoft.ML.Numeric;
 using Microsoft.ML.Runtime;
 using Newtonsoft.Json.Linq;
 
-[assembly: LoadableClass(typeof(MulticlassClassificationScorer),
-    typeof(MulticlassClassificationScorer.Arguments), typeof(SignatureDataScorer),
+[assembly: LoadableClass(typeof(MultiClassClassifierScorer),
+    typeof(MultiClassClassifierScorer.Arguments), typeof(SignatureDataScorer),
     "Multi-Class Classifier Scorer", "MultiClassClassifierScorer", "MultiClassClassifier",
-    "MultiClass", AnnotationUtils.Const.ScoreColumnKind.MulticlassClassification)]
+    "MultiClass", AnnotationUtils.Const.ScoreColumnKind.MultiClassClassification)]
 
-[assembly: LoadableClass(typeof(MulticlassClassificationScorer), null, typeof(SignatureLoadDataTransform),
-    "Multi-Class Classifier Scorer", MulticlassClassificationScorer.LoaderSignature)]
+[assembly: LoadableClass(typeof(MultiClassClassifierScorer), null, typeof(SignatureLoadDataTransform),
+    "Multi-Class Classifier Scorer", MultiClassClassifierScorer.LoaderSignature)]
 
-[assembly: LoadableClass(typeof(ISchemaBindableMapper), typeof(MulticlassClassificationScorer.LabelNameBindableMapper), null, typeof(SignatureLoadModel),
-    "Multi-Class Label-Name Mapper", MulticlassClassificationScorer.LabelNameBindableMapper.LoaderSignature)]
+[assembly: LoadableClass(typeof(ISchemaBindableMapper), typeof(MultiClassClassifierScorer.LabelNameBindableMapper), null, typeof(SignatureLoadModel),
+    "Multi-Class Label-Name Mapper", MultiClassClassifierScorer.LabelNameBindableMapper.LoaderSignature)]
 
 namespace Microsoft.ML.Data
 {
-    internal sealed class MulticlassClassificationScorer : PredictedLabelScorerBase
+    internal sealed class MultiClassClassifierScorer : PredictedLabelScorerBase
     {
         // REVIEW: consider outputting probabilities when multi-class classifiers distinguish
         // between scores and probabilities (using IDistributionPredictor)
@@ -48,7 +48,7 @@ namespace Microsoft.ML.Data
                 verReadableCur: 0x00010003,
                 verWeCanReadBack: 0x00010003,
                 loaderSignature: LoaderSignature,
-                loaderAssemblyName: typeof(MulticlassClassificationScorer).Assembly.FullName);
+                loaderAssemblyName: typeof(MultiClassClassifierScorer).Assembly.FullName);
         }
 
         private const string RegistrationName = "MultiClassClassifierScore";
@@ -429,7 +429,7 @@ namespace Microsoft.ML.Data
             var scoreType = outSchema[scoreIdx].Type;
 
             // Check that the type is vector, and is of compatible size with the score output.
-            return labelNameType is VectorType vectorType && vectorType.Size == scoreType.GetVectorSize() && vectorType.ItemType == TextDataViewType.Instance;
+            return labelNameType is VectorType vectorType && vectorType.Size == scoreType.GetVectorSize();
         }
 
         internal static ISchemaBoundMapper WrapCore<T>(IHostEnvironment env, ISchemaBoundMapper mapper, RoleMappedSchema trainSchema)
@@ -455,18 +455,18 @@ namespace Microsoft.ML.Data
         }
 
         [BestFriend]
-        internal MulticlassClassificationScorer(IHostEnvironment env, Arguments args, IDataView data, ISchemaBoundMapper mapper, RoleMappedSchema trainSchema)
-            : base(args, env, data, WrapIfNeeded(env, mapper, trainSchema), trainSchema, RegistrationName, AnnotationUtils.Const.ScoreColumnKind.MulticlassClassification,
+        internal MultiClassClassifierScorer(IHostEnvironment env, Arguments args, IDataView data, ISchemaBoundMapper mapper, RoleMappedSchema trainSchema)
+            : base(args, env, data, WrapIfNeeded(env, mapper, trainSchema), trainSchema, RegistrationName, AnnotationUtils.Const.ScoreColumnKind.MultiClassClassification,
                 AnnotationUtils.Const.ScoreValueKind.Score, OutputTypeMatches, GetPredColType)
         {
         }
 
-        private MulticlassClassificationScorer(IHostEnvironment env, MulticlassClassificationScorer transform, IDataView newSource)
+        private MultiClassClassifierScorer(IHostEnvironment env, MultiClassClassifierScorer transform, IDataView newSource)
             : base(env, transform, newSource, RegistrationName)
         {
         }
 
-        private MulticlassClassificationScorer(IHost host, ModelLoadContext ctx, IDataView input)
+        private MultiClassClassifierScorer(IHost host, ModelLoadContext ctx, IDataView input)
             : base(host, ctx, input, OutputTypeMatches, GetPredColType)
         {
             // *** Binary format ***
@@ -476,14 +476,14 @@ namespace Microsoft.ML.Data
         /// <summary>
         /// Corresponds to <see cref="SignatureLoadDataTransform"/>.
         /// </summary>
-        private static MulticlassClassificationScorer Create(IHostEnvironment env, ModelLoadContext ctx, IDataView input)
+        private static MultiClassClassifierScorer Create(IHostEnvironment env, ModelLoadContext ctx, IDataView input)
         {
             Contracts.CheckValue(env, nameof(env));
             var h = env.Register(RegistrationName);
             h.CheckValue(ctx, nameof(ctx));
             h.CheckValue(input, nameof(input));
             ctx.CheckAtModel(GetVersionInfo());
-            return h.Apply("Loading Model", ch => new MulticlassClassificationScorer(h, ctx, input));
+            return h.Apply("Loading Model", ch => new MultiClassClassifierScorer(h, ctx, input));
         }
 
         private protected override void SaveCore(ModelSaveContext ctx)
@@ -502,7 +502,7 @@ namespace Microsoft.ML.Data
             Contracts.CheckValue(env, nameof(env));
             Contracts.CheckValue(newSource, nameof(newSource));
 
-            return new MulticlassClassificationScorer(env, this, newSource);
+            return new MultiClassClassifierScorer(env, this, newSource);
         }
 
         protected override Delegate GetPredictedLabelGetter(DataViewRow output, out Delegate scoreGetter)

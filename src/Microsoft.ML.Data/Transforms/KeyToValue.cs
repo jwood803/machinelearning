@@ -69,7 +69,7 @@ namespace Microsoft.ML.Transforms
         [BestFriend]
         internal const string UserName = "Key To Value Transform";
 
-        internal IReadOnlyCollection<(string outputColumnName, string inputColumnName)> Columns => ColumnPairs.AsReadOnly();
+        public IReadOnlyCollection<(string outputColumnName, string inputColumnName)> Columns => ColumnPairs.AsReadOnly();
 
         private static VersionInfo GetVersionInfo()
         {

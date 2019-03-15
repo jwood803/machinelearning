@@ -5,7 +5,7 @@
 using System;
 using Microsoft.ML.Runtime;
 
-namespace Microsoft.ML.Trainers
+namespace Microsoft.ML.Model
 {
     /// <summary>
     /// A base class for predictors producing <typeparamref name="TOutput"/>.

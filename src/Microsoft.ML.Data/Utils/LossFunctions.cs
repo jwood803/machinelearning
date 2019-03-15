@@ -45,7 +45,7 @@ namespace Microsoft.ML.Trainers
     /// The loss function may know the close-form solution to the optimal dual update
     /// Ref: Sec(6.2) of http://jmlr.org/papers/volume14/shalev-shwartz13a/shalev-shwartz13a.pdf
     /// </summary>
-    public interface ISupportSdcaLoss : IScalarLoss
+    public interface ISupportSdcaLoss : IScalarOutputLoss
     {
         //This method helps the optimizer pre-compute the invariants that will be used later in DualUpdate.
         //scaledFeaturesNormSquared = instanceWeight * (|x|^2 + 1) / (lambda * n), where
@@ -71,7 +71,7 @@ namespace Microsoft.ML.Trainers
         /// </summary>
         /// <param name="label">The label of the example.</param>
         /// <param name="dual">The dual variable of the example.</param>
-        Double DualLoss(float label, float dual);
+        Double DualLoss(float label, Double dual);
     }
 
     public interface ISupportSdcaClassificationLoss : ISupportSdcaLoss, IClassificationLoss
@@ -83,22 +83,19 @@ namespace Microsoft.ML.Trainers
     }
 
     [TlcModule.ComponentKind("SDCAClassificationLossFunction")]
-    [BestFriend]
-    internal interface ISupportSdcaClassificationLossFactory : IComponentFactory<ISupportSdcaClassificationLoss>
+    public interface ISupportSdcaClassificationLossFactory : IComponentFactory<ISupportSdcaClassificationLoss>
     {
     }
 
     [TlcModule.ComponentKind("SDCARegressionLossFunction")]
-    [BestFriend]
-    internal interface ISupportSdcaRegressionLossFactory : IComponentFactory<ISupportSdcaRegressionLoss>
+    public interface ISupportSdcaRegressionLossFactory : IComponentFactory<ISupportSdcaRegressionLoss>
     {
         new ISupportSdcaRegressionLoss CreateComponent(IHostEnvironment env);
     }
 
     [TlcModule.Component(Name = "LogLoss", FriendlyName = "Log loss", Aliases = new[] { "Logistic", "CrossEntropy" },
         Desc = "Log loss.")]
-    [BestFriend]
-    internal sealed class LogLossFactory : ISupportSdcaClassificationLossFactory, ISupportClassificationLossFactory
+    public sealed class LogLossFactory : ISupportSdcaClassificationLossFactory, ISupportClassificationLossFactory
     {
         public ISupportSdcaClassificationLoss CreateComponent(IHostEnvironment env) => new LogLoss();
 
@@ -141,7 +138,7 @@ namespace Microsoft.ML.Trainers
             return maxNumThreads >= 2 && Math.Abs(fullUpdate) > Threshold ? fullUpdate / maxNumThreads : fullUpdate;
         }
 
-        public Double DualLoss(float label, float dual)
+        public Double DualLoss(float label, Double dual)
         {
             // Normalize the dual with label.
             if (label <= 0)
@@ -166,8 +163,7 @@ namespace Microsoft.ML.Trainers
     public sealed class HingeLoss : ISupportSdcaClassificationLoss
     {
         [TlcModule.Component(Name = "HingeLoss", FriendlyName = "Hinge loss", Alias = "Hinge", Desc = "Hinge loss.")]
-        [BestFriend]
-        internal sealed class Options : ISupportSdcaClassificationLossFactory, ISupportClassificationLossFactory
+        public sealed class Options : ISupportSdcaClassificationLossFactory, ISupportClassificationLossFactory
         {
             [Argument(ArgumentType.AtMostOnce, HelpText = "Margin value", ShortName = "marg")]
             public float Margin = Defaults.Margin;
@@ -181,7 +177,7 @@ namespace Microsoft.ML.Trainers
         private const float Threshold = 0.5f;
         private readonly float _margin;
 
-        private HingeLoss(Options options)
+        internal HingeLoss(Options options)
         {
             _margin = options.Margin;
         }
@@ -222,7 +218,7 @@ namespace Microsoft.ML.Trainers
             return maxNumThreads >= 2 && Math.Abs(fullUpdate) > Threshold ? fullUpdate / maxNumThreads : fullUpdate;
         }
 
-        public Double DualLoss(float label, float dual)
+        public Double DualLoss(float label, Double dual)
         {
             if (label <= 0)
                 dual = -dual;
@@ -239,7 +235,7 @@ namespace Microsoft.ML.Trainers
     {
         [TlcModule.Component(Name = "SmoothedHingeLoss", FriendlyName = "Smoothed Hinge Loss", Alias = "SmoothedHinge",
                              Desc = "Smoothed Hinge loss.")]
-        internal sealed class Options : ISupportSdcaClassificationLossFactory, ISupportClassificationLossFactory
+        public sealed class Options : ISupportSdcaClassificationLossFactory, ISupportClassificationLossFactory
         {
             [Argument(ArgumentType.AtMostOnce, HelpText = "Smoothing constant", ShortName = "smooth")]
             public float SmoothingConst = Defaults.SmoothingConst;
@@ -319,7 +315,7 @@ namespace Microsoft.ML.Trainers
             return maxNumThreads >= 2 && Math.Abs(fullUpdate) > Threshold ? fullUpdate / maxNumThreads : fullUpdate;
         }
 
-        public Double DualLoss(float label, float dual)
+        public Double DualLoss(float label, Double dual)
         {
             if (label <= 0)
                 dual = -dual;
@@ -338,7 +334,7 @@ namespace Microsoft.ML.Trainers
     public sealed class ExpLoss : IClassificationLoss
     {
         [TlcModule.Component(Name = "ExpLoss", FriendlyName = "Exponential Loss", Desc = "Exponential loss.")]
-        internal sealed class Options : ISupportClassificationLossFactory
+        public sealed class Options : ISupportClassificationLossFactory
         {
             [Argument(ArgumentType.AtMostOnce, HelpText = "Beta (dilation)", ShortName = "beta")]
             public float Beta = 1;
@@ -350,14 +346,9 @@ namespace Microsoft.ML.Trainers
 
         private readonly float _beta;
 
-        internal ExpLoss(Options options)
+        public ExpLoss(Options options)
         {
             _beta = options.Beta;
-        }
-
-        public ExpLoss(float beta = 1)
-        {
-            _beta = beta;
         }
 
         public Double Loss(float output, float label)
@@ -375,8 +366,7 @@ namespace Microsoft.ML.Trainers
     }
 
     [TlcModule.Component(Name = "SquaredLoss", FriendlyName = "Squared Loss", Alias = "L2", Desc = "Squared loss.")]
-    [BestFriend]
-    internal sealed class SquaredLossFactory : ISupportSdcaRegressionLossFactory, ISupportRegressionLossFactory
+    public sealed class SquaredLossFactory : ISupportSdcaRegressionLossFactory, ISupportRegressionLossFactory
     {
         public ISupportSdcaRegressionLoss CreateComponent(IHostEnvironment env) => new SquaredLoss();
 
@@ -410,15 +400,14 @@ namespace Microsoft.ML.Trainers
             return maxNumThreads >= 2 ? fullUpdate / maxNumThreads : fullUpdate;
         }
 
-        public Double DualLoss(float label, float dual)
+        public Double DualLoss(float label, Double dual)
         {
             return -dual * (dual / 4 - label);
         }
     }
 
     [TlcModule.Component(Name = "PoissonLoss", FriendlyName = "Poisson Loss", Desc = "Poisson loss.")]
-    [BestFriend]
-    internal sealed class PoissonLossFactory : ISupportRegressionLossFactory
+    public sealed class PoissonLossFactory : ISupportRegressionLossFactory
     {
         public IRegressionLoss CreateComponent(IHostEnvironment env) => new PoissonLoss();
     }
@@ -450,7 +439,7 @@ namespace Microsoft.ML.Trainers
     public sealed class TweedieLoss : IRegressionLoss
     {
         [TlcModule.Component(Name = "TweedieLoss", FriendlyName = "Tweedie Loss", Alias = "tweedie", Desc = "Tweedie loss.")]
-        internal sealed class Options : ISupportRegressionLossFactory
+        public sealed class Options : ISupportRegressionLossFactory
         {
             [Argument(ArgumentType.LastOccurenceWins, HelpText =
                 "Index parameter for the Tweedie distribution, in the range [1, 2]. 1 is Poisson loss, 2 is gamma loss, " +
@@ -466,7 +455,7 @@ namespace Microsoft.ML.Trainers
         private readonly Double _index1; // 1 minus the index parameter.
         private readonly Double _index2; // 2 minus the index parameter.
 
-        private TweedieLoss(Options options)
+        public TweedieLoss(Options options)
         {
             Contracts.CheckUserArg(1 <= options.Index && options.Index <= 2, nameof(options.Index), "Must be in the range [1, 2]");
             _index = options.Index;

@@ -4,18 +4,10 @@
 
 namespace Microsoft.ML.Trainers
 {
-    /// <summary>
-    /// Interface for the Trainer Estimator.
-    /// </summary>
-    /// <typeparam name="TTransformer">The type of the transformer returned by the estimator.</typeparam>
-    /// <typeparam name="TModel">The type of the model parameters.</typeparam>
-    public interface ITrainerEstimator<out TTransformer, out TModel> : IEstimator<TTransformer>
-        where TTransformer : ISingleFeaturePredictionTransformer<TModel>
-        where TModel : class
+    public interface ITrainerEstimator<out TTransformer, out TPredictor> : IEstimator<TTransformer>
+        where TTransformer : ISingleFeaturePredictionTransformer<TPredictor>
+        where TPredictor : class
     {
-        /// <summary>
-        /// Gets the <see cref="TrainerInfo"/> information about the trainer.
-        /// </summary>
         TrainerInfo Info { get; }
     }
 }

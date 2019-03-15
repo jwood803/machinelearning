@@ -200,8 +200,7 @@ namespace Microsoft.ML.Data
                 LastTransformer = null;
         }
 
-        [BestFriend]
-        internal void SaveTo(IHostEnvironment env, Stream outputStream)
+        public void SaveTo(IHostEnvironment env, Stream outputStream)
         {
             using (var ch = env.Start("Saving pipeline"))
             {
@@ -277,7 +276,7 @@ namespace Microsoft.ML.Data
                     if (predictor.PredictionKind == PredictionKind.BinaryClassification)
                         pred = new BinaryPredictionTransformer<IPredictorProducing<float>>(env, predictor as IPredictorProducing<float>, chain.Schema,
                             roles.Where(x => x.Key.Value == RoleMappedSchema.ColumnRole.Feature.Value).First().Value);
-                    else if (predictor.PredictionKind == PredictionKind.MulticlassClassification)
+                    else if (predictor.PredictionKind == PredictionKind.MultiClassClassification)
                         pred = new MulticlassPredictionTransformer<IPredictorProducing<VBuffer<float>>>(env,
                             predictor as IPredictorProducing<VBuffer<float>>, chain.Schema,
                             roles.Where(x => x.Key.Value == RoleMappedSchema.ColumnRole.Feature.Value).First().Value,
@@ -298,6 +297,14 @@ namespace Microsoft.ML.Data
                         throw env.Except("Don't know how to map prediction kind {0}", predictor.PredictionKind);
                     return transformChain.Append(pred);
                 }
+            }
+        }
+
+        public static TransformerChain<ITransformer> LoadFromPath(IHostEnvironment env, string modelPath)
+        {
+            using (var stream = File.OpenRead(modelPath))
+            {
+                return LoadFrom(env, stream);
             }
         }
     }

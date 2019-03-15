@@ -11,10 +11,11 @@ using Microsoft.Data.DataView;
 using Microsoft.ML;
 using Microsoft.ML.CommandLine;
 using Microsoft.ML.Data;
+using Microsoft.ML.ImageAnalytics;
 using Microsoft.ML.Internal.Internallearn;
 using Microsoft.ML.Internal.Utilities;
 using Microsoft.ML.Runtime;
-using Microsoft.ML.Transforms.Image;
+using Microsoft.ML.Transforms;
 
 [assembly: LoadableClass(ImageResizingTransformer.Summary, typeof(IDataTransform), typeof(ImageResizingTransformer), typeof(ImageResizingTransformer.Arguments),
     typeof(SignatureDataTransform), ImageResizingTransformer.UserName, "ImageResizerTransform", "ImageResizer")]
@@ -28,7 +29,7 @@ using Microsoft.ML.Transforms.Image;
 [assembly: LoadableClass(typeof(IRowMapper), typeof(ImageResizingTransformer), null, typeof(SignatureLoadRowMapper),
     ImageResizingTransformer.UserName, ImageResizingTransformer.LoaderSignature)]
 
-namespace Microsoft.ML.Transforms.Image
+namespace Microsoft.ML.ImageAnalytics
 {
     // REVIEW: Rewrite as LambdaTransform to simplify.
     /// <summary>
@@ -119,7 +120,7 @@ namespace Microsoft.ML.Transforms.Image
         /// <summary>
         /// The columns passed to this <see cref="ITransformer"/>.
         /// </summary>
-        internal IReadOnlyCollection<ImageResizingEstimator.ColumnOptions> Columns => _columns.AsReadOnly();
+        public IReadOnlyCollection<ImageResizingEstimator.ColumnOptions> Columns => _columns.AsReadOnly();
 
         ///<summary>
         /// Resize image.
@@ -248,8 +249,8 @@ namespace Microsoft.ML.Transforms.Image
 
             foreach (var col in _columns)
             {
-                ctx.Writer.Write(col.ImageWidth);
-                ctx.Writer.Write(col.ImageHeight);
+                ctx.Writer.Write(col.Width);
+                ctx.Writer.Write(col.Height);
                 Contracts.Assert((ImageResizingEstimator.ResizingKind)(byte)col.Resizing == col.Resizing);
                 ctx.Writer.Write((byte)col.Resizing);
                 Contracts.Assert((ImageResizingEstimator.Anchor)(byte)col.Anchor == col.Anchor);
@@ -306,7 +307,7 @@ namespace Microsoft.ML.Transforms.Image
                         getSrc(ref src);
                         if (src == null || src.Height <= 0 || src.Width <= 0)
                             return;
-                        if (src.Height == info.ImageHeight && src.Width == info.ImageWidth)
+                        if (src.Height == info.Height && src.Width == info.Width)
                         {
                             dst = src;
                             return;
@@ -324,22 +325,22 @@ namespace Microsoft.ML.Transforms.Image
                         float widthAspect = 0;
                         float heightAspect = 0;
 
-                        widthAspect = (float)info.ImageWidth / sourceWidth;
-                        heightAspect = (float)info.ImageHeight / sourceHeight;
+                        widthAspect = (float)info.Width / sourceWidth;
+                        heightAspect = (float)info.Height / sourceHeight;
 
                         if (info.Resizing == ImageResizingEstimator.ResizingKind.IsoPad)
                         {
-                            widthAspect = (float)info.ImageWidth / sourceWidth;
-                            heightAspect = (float)info.ImageHeight / sourceHeight;
+                            widthAspect = (float)info.Width / sourceWidth;
+                            heightAspect = (float)info.Height / sourceHeight;
                             if (heightAspect < widthAspect)
                             {
                                 aspect = heightAspect;
-                                destX = (int)((info.ImageWidth - (sourceWidth * aspect)) / 2);
+                                destX = (int)((info.Width - (sourceWidth * aspect)) / 2);
                             }
                             else
                             {
                                 aspect = widthAspect;
-                                destY = (int)((info.ImageHeight - (sourceHeight * aspect)) / 2);
+                                destY = (int)((info.Height - (sourceHeight * aspect)) / 2);
                             }
 
                             destWidth = (int)(sourceWidth * aspect);
@@ -356,10 +357,10 @@ namespace Microsoft.ML.Transforms.Image
                                         destY = 0;
                                         break;
                                     case ImageResizingEstimator.Anchor.Bottom:
-                                        destY = (int)(info.ImageHeight - (sourceHeight * aspect));
+                                        destY = (int)(info.Height - (sourceHeight * aspect));
                                         break;
                                     default:
-                                        destY = (int)((info.ImageHeight - (sourceHeight * aspect)) / 2);
+                                        destY = (int)((info.Height - (sourceHeight * aspect)) / 2);
                                         break;
                                 }
                             }
@@ -372,10 +373,10 @@ namespace Microsoft.ML.Transforms.Image
                                         destX = 0;
                                         break;
                                     case ImageResizingEstimator.Anchor.Right:
-                                        destX = (int)(info.ImageWidth - (sourceWidth * aspect));
+                                        destX = (int)(info.Width - (sourceWidth * aspect));
                                         break;
                                     default:
-                                        destX = (int)((info.ImageWidth - (sourceWidth * aspect)) / 2);
+                                        destX = (int)((info.Width - (sourceWidth * aspect)) / 2);
                                         break;
                                 }
                             }
@@ -385,18 +386,18 @@ namespace Microsoft.ML.Transforms.Image
                         }
                         else if (info.Resizing == ImageResizingEstimator.ResizingKind.Fill)
                         {
-                            destWidth = info.ImageWidth;
-                            destHeight = info.ImageHeight;
+                            destWidth = info.Width;
+                            destHeight = info.Height;
                         }
 
-                        dst = new Bitmap(info.ImageWidth, info.ImageHeight, src.PixelFormat);
+                        dst = new Bitmap(info.Width, info.Height, src.PixelFormat);
                         var srcRectangle = new Rectangle(sourceX, sourceY, sourceWidth, sourceHeight);
                         var destRectangle = new Rectangle(destX, destY, destWidth, destHeight);
                         using (var g = Graphics.FromImage(dst))
                         {
                             g.DrawImage(src, destRectangle, srcRectangle, GraphicsUnit.Pixel);
                         }
-                        Contracts.Assert(dst.Width == info.ImageWidth && dst.Height == info.ImageHeight);
+                        Contracts.Assert(dst.Width == info.Width && dst.Height == info.Height);
                     };
 
                 return del;
@@ -470,10 +471,10 @@ namespace Microsoft.ML.Transforms.Image
             public readonly string InputColumnName;
 
             /// <summary>Width to resize the image to.</summary>
-            public readonly int ImageWidth;
+            public readonly int Width;
 
             /// <summary>Height to resize the image to.</summary>
-            public readonly int ImageHeight;
+            public readonly int Height;
 
             /// <summary>What <see cref="ResizingKind"/> to use (uniform, or non-uniform).</summary>
             public readonly ResizingKind Resizing;
@@ -488,31 +489,31 @@ namespace Microsoft.ML.Transforms.Image
             /// Describes how the transformer handles one image resize column pair.
             /// </summary>
             /// <param name="name">Name of the column resulting from the transformation of <paramref name="inputColumnName"/>.</param>
-            /// <param name="imageWidth">Width of resized image.</param>
-            /// <param name="imageHeight">Height of resized image.</param>
+            /// <param name="width">Width of resized image.</param>
+            /// <param name="height">Height of resized image.</param>
             /// <param name="inputColumnName">Name of column to transform. If set to <see langword="null"/>, the value of the <paramref name="name"/> will be used as source.</param>
             /// <param name="resizing">What <see cref="ImageResizingEstimator.ResizingKind"/> to use.</param>
             /// <param name="anchor">If <paramref name="resizing"/> set to <see cref="ImageResizingEstimator.ResizingKind.IsoCrop"/> what anchor to use for cropping.</param>
             public ColumnOptions(string name,
-                int imageWidth,
-                int imageHeight,
+                int width,
+                int height,
                 string inputColumnName = null,
                 ResizingKind resizing = Defaults.Resizing,
                 Anchor anchor = Defaults.CropAnchor)
             {
                 Contracts.CheckNonEmpty(name, nameof(name));
-                Contracts.CheckUserArg(imageWidth > 0, nameof(imageWidth));
-                Contracts.CheckUserArg(imageHeight > 0, nameof(imageHeight));
+                Contracts.CheckUserArg(width > 0, nameof(width));
+                Contracts.CheckUserArg(height > 0, nameof(height));
                 Contracts.CheckUserArg(Enum.IsDefined(typeof(ResizingKind), resizing), nameof(resizing));
                 Contracts.CheckUserArg(Enum.IsDefined(typeof(Anchor), anchor), nameof(anchor));
 
                 Name = name;
                 InputColumnName = inputColumnName ?? name;
-                ImageWidth = imageWidth;
-                ImageHeight = imageHeight;
+                Width = width;
+                Height = height;
                 Resizing = resizing;
                 Anchor = anchor;
-                Type = new ImageType(ImageHeight, ImageWidth);
+                Type = new ImageType(Height, Width);
             }
         }
 

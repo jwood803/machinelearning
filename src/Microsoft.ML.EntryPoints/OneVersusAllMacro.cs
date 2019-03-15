@@ -130,7 +130,7 @@ namespace Microsoft.ML.EntryPoints
 
                 // Get number of classes
                 var data = new RoleMappedData(input.TrainingData, label, feature, null, weight);
-                data.CheckMulticlassLabel(out var numClasses);
+                data.CheckMultiClassLabel(out var numClasses);
                 return numClasses;
             }
         }

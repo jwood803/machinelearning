@@ -18,14 +18,14 @@ namespace Microsoft.ML.Samples.Dynamic.Trainers.BinaryClassification
             var data = SamplesUtils.DatasetUtils.LoadFeaturizedAdultDataset(mlContext);
 
             // Leave out 10% of data for testing.
-            var trainTestData = mlContext.Data.TrainTestSplit(data, testFraction: 0.1);
+            var trainTestData = mlContext.BinaryClassification.TrainTestSplit(data, testFraction: 0.1);
 
             // Define the trainer options.
             var options = new AveragedPerceptronTrainer.Options()
             {
-                LossFunction = new SmoothedHingeLoss(),
+                LossFunction = new SmoothedHingeLoss.Options(),
                 LearningRate = 0.1f,
-                LazyUpdate = false,
+                DoLazyUpdates = false,
                 RecencyGain = 0.1f,
                 NumberOfIterations = 10
             };
