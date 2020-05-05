@@ -37,7 +37,7 @@ namespace Microsoft.ML.Benchmarks
                     new TextLoader.Column("Features", DataKind.Single, new[] {new TextLoader.Range() {Min = 0, Max = 63}})
                 },
                 HasHeader = false,
-                Separators = new[] {','}
+                Separators = new[] { ',' }
             });
 
             var data = loader.Load(_dataPathDigits);

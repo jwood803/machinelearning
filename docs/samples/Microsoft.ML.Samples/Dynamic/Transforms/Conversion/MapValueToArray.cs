@@ -5,7 +5,7 @@ using Microsoft.ML;
 namespace Samples.Dynamic
 {
     public static class MapValueToArray
-    { 
+    {
         /// This example demonstrates the use of MapValue by mapping strings to
         /// array values, which allows for mapping data to numeric arrays. This
         /// functionality is useful when the generated column will serve as the

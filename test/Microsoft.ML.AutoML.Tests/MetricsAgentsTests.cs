@@ -61,7 +61,7 @@ namespace Microsoft.ML.AutoML.Test
         [Fact]
         public void MulticlassMetricsGetScoreTest()
         {
-            var metrics = MetricsUtil.CreateMulticlassClassificationMetrics(0.1, 0.2, 0.3, 0.4, 0, 0.5, new double[] {});
+            var metrics = MetricsUtil.CreateMulticlassClassificationMetrics(0.1, 0.2, 0.3, 0.4, 0, 0.5, new double[] { });
             Assert.Equal(0.1, GetScore(metrics, MulticlassClassificationMetric.MicroAccuracy));
             Assert.Equal(0.2, GetScore(metrics, MulticlassClassificationMetric.MacroAccuracy));
             Assert.Equal(0.3, GetScore(metrics, MulticlassClassificationMetric.LogLoss));
@@ -126,7 +126,7 @@ namespace Microsoft.ML.AutoML.Test
         {
             var ex = MetricsAgentUtil.BuildMetricNotSupportedException(BinaryClassificationMetric.Accuracy);
             Assert.Equal(typeof(NotSupportedException), ex.GetType());
-        }        
+        }
 
         private static double GetScore(BinaryClassificationMetrics metrics, BinaryClassificationMetric metric)
         {

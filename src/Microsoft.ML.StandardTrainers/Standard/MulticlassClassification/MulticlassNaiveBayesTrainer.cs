@@ -9,7 +9,6 @@ using Microsoft.ML;
 using Microsoft.ML.Data;
 using Microsoft.ML.EntryPoints;
 using Microsoft.ML.Internal.Utilities;
-using Microsoft.ML.Model;
 using Microsoft.ML.Model.OnnxConverter;
 using Microsoft.ML.Runtime;
 using Microsoft.ML.Trainers;
@@ -274,7 +273,7 @@ namespace Microsoft.ML.Trainers
         /// </summary>
         [Obsolete("This API is deprecated, please use GetFeatureHistogramLong() which returns _featureHistogram " +
             "with type IReadOnlyList<long> to avoid overflow errors with large datasets.", true)]
-        public IReadOnlyList<IReadOnlyList<int>> GetFeatureHistogram() => Array.ConvertAll(_featureHistogram, x => Array.ConvertAll(x, y=> (int)y));
+        public IReadOnlyList<IReadOnlyList<int>> GetFeatureHistogram() => Array.ConvertAll(_featureHistogram, x => Array.ConvertAll(x, y => (int)y));
 
         /// <summary>
         /// Get the feature histogram with generic type long.

@@ -7,7 +7,6 @@ using System.IO;
 using Microsoft.ML.Calibrators;
 using Microsoft.ML.Data;
 using Microsoft.ML.Model;
-using Microsoft.ML.TestFramework.Attributes;
 using Microsoft.ML.Trainers;
 using Xunit;
 
@@ -117,7 +116,7 @@ namespace Microsoft.ML.Tests.TrainerEstimators
             validateStats(linearModel);
 
             var modelAndSchemaPath = GetOutputPath("TestLRWithStats.zip");
-            
+
             // Save model. 
             ML.Model.Save(transformer, dataView.Schema, modelAndSchemaPath);
 

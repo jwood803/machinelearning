@@ -338,7 +338,7 @@ namespace Microsoft.ML.Runtime
 
             protected override void Dispose(bool disposing)
             {
-                if(disposing)
+                if (disposing)
                 {
                     Watch.Stop();
                     Root._consoleWriter.ChannelDisposed(this);

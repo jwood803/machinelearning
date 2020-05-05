@@ -410,7 +410,7 @@ namespace Microsoft.ML.RunTests
                 view = new ChooseColumnsByIndexTransform(env, chooseargs, view);
             }
 
-            var args = new TextLoader.Options() { AllowSparse = true, AllowQuoting = true};
+            var args = new TextLoader.Options() { AllowSparse = true, AllowQuoting = true };
             if (!CmdParser.ParseArguments(Env, argsLoader, args))
             {
                 Fail("Couldn't parse the args '{0}' in '{1}'", argsLoader, pathData);
@@ -664,7 +664,7 @@ namespace Microsoft.ML.RunTests
             Check(tmp, "All same failed");
             all &= tmp;
 
-            var view2EvenCols = view2.Schema.Where(col => (col.Index & 1) == 0); 
+            var view2EvenCols = view2.Schema.Where(col => (col.Index & 1) == 0);
             using (var curs1 = view1.GetRowCursorForAllColumns())
             using (var curs2 = view2.GetRowCursor(view2EvenCols))
             {

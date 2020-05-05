@@ -2,12 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using Microsoft.ML.CodeGenerator.Utilities;
 
 namespace Microsoft.ML.CodeGenerator.CodeGenerator
@@ -18,7 +15,7 @@ namespace Microsoft.ML.CodeGenerator.CodeGenerator
 
         public void WriteToDisk(string folder)
         {
-            foreach ( var project in this)
+            foreach (var project in this)
             {
                 project.WriteToDisk(Path.Combine(folder, project.Name));
             }

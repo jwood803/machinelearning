@@ -1441,7 +1441,7 @@ namespace Microsoft.ML.Data
 
         private static List<ReadOnlyMemory<char>> GetPredictedLabelNames(in VBuffer<ReadOnlyMemory<char>> labelNames, int[] labelIndexToConfIndexMap)
         {
-            List <ReadOnlyMemory<char>> result = new List<ReadOnlyMemory<char>>();
+            List<ReadOnlyMemory<char>> result = new List<ReadOnlyMemory<char>>();
             var values = labelNames.GetValues();
             for (int i = 0; i < values.Length; i++)
             {
@@ -1585,7 +1585,7 @@ namespace Microsoft.ML.Data
         internal static string GetConfusionTableAsString(ConfusionMatrix confusionMatrix, bool isWeighted)
         {
             string prefix = isWeighted ? "Weighted " : "";
-            int numLabels = confusionMatrix?.Counts == null? 0: confusionMatrix.Counts.Count;
+            int numLabels = confusionMatrix?.Counts == null ? 0 : confusionMatrix.Counts.Count;
 
             int colWidth = numLabels == 2 ? 8 : 5;
             int maxNameLen = confusionMatrix.PredictedClassesIndicators.Max(name => name.Length);

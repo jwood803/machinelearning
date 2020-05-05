@@ -5,10 +5,10 @@
 using System.IO;
 using BenchmarkDotNet.Attributes;
 using Microsoft.ML.Data;
-using Microsoft.ML.Trainers.LightGbm;
-using Microsoft.ML.Trainers;
-using Microsoft.ML.Transforms;
 using Microsoft.ML.TestFrameworkCommon;
+using Microsoft.ML.Trainers;
+using Microsoft.ML.Trainers.LightGbm;
+using Microsoft.ML.Transforms;
 
 namespace Microsoft.ML.Benchmarks
 {

@@ -11,7 +11,7 @@ using Xunit.Abstractions;
 
 namespace Microsoft.ML.AutoML.Test
 {
-    
+
     public class SweeperTests : BaseTestClass
     {
         public SweeperTests(ITestOutputHelper output) : base(output)
@@ -95,7 +95,7 @@ namespace Microsoft.ML.AutoML.Test
                     new FloatValueGenerator(new FloatParamArguments() { Name = "x4", Min = 1, Max = 1000}),
                 },
             });
-            
+
             List<RunResult> results = new List<RunResult>();
 
             RunResult bestResult = null;
@@ -154,7 +154,7 @@ namespace Microsoft.ML.AutoML.Test
             while (true)
             {
                 ParameterSet[] pars = sweeper.ProposeSweeps(1, results);
-                if(pars == null)
+                if (pars == null)
                 {
                     break;
                 }

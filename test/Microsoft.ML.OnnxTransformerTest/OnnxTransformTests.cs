@@ -12,12 +12,12 @@ using Microsoft.ML.Model;
 using Microsoft.ML.RunTests;
 using Microsoft.ML.Runtime;
 using Microsoft.ML.TestFramework.Attributes;
+using Microsoft.ML.TestFrameworkCommon.Attributes;
 using Microsoft.ML.Tools;
 using Microsoft.ML.Transforms.Image;
+using Microsoft.ML.Transforms.Onnx;
 using Xunit;
 using Xunit.Abstractions;
-using Microsoft.ML.Transforms.Onnx;
-using Microsoft.ML.TestFrameworkCommon.Attributes;
 
 namespace Microsoft.ML.Tests
 {
@@ -584,14 +584,14 @@ namespace Microsoft.ML.Tests
 
         private class OnnxMapInput
         {
-            [OnnxMapType(typeof(int),typeof(float))]
-            public IDictionary<int,float> Input { get; set; }
+            [OnnxMapType(typeof(int), typeof(float))]
+            public IDictionary<int, float> Input { get; set; }
         }
 
         private class OnnxMapOutput
         {
-            [OnnxMapType(typeof(int),typeof(float))]
-            public IDictionary<int,float> Output { get; set; }
+            [OnnxMapType(typeof(int), typeof(float))]
+            public IDictionary<int, float> Output { get; set; }
         }
 
         /// <summary>
@@ -624,10 +624,10 @@ namespace Microsoft.ML.Tests
             var transformedDataView = model.Transform(dataView);
             var transformedDataPoints = ML.Data.CreateEnumerable<OnnxMapOutput>(transformedDataView, false).ToList();
 
-            for(int i = 0; i < dataPoints.Count(); ++i)
+            for (int i = 0; i < dataPoints.Count(); ++i)
             {
                 Assert.Equal(dataPoints[i].Input.Count(), transformedDataPoints[i].Output.Count());
-                foreach(var pair in dataPoints[i].Input)
+                foreach (var pair in dataPoints[i].Input)
                     Assert.Equal(pair.Value, transformedDataPoints[i].Output[pair.Key + 1]);
             }
         }
@@ -679,7 +679,7 @@ namespace Microsoft.ML.Tests
                 modelFile, shapeDictionary).Fit(dataView).Transform(dataView);
 
             // Conduct the same check for all the 3 called public APIs.
-            foreach(var transformedDataView in transformedDataViews)
+            foreach (var transformedDataView in transformedDataViews)
             {
                 var transformedDataPoints = ML.Data.CreateEnumerable<PredictionWithCustomShape>(transformedDataView, false).ToList();
 
@@ -763,32 +763,32 @@ namespace Microsoft.ML.Tests
             Assert.False(somethingWrong);
 
             // Case 3: this shape conflicts with output shape [1, 1, 1, 5] loaded from the model.
-            shapeDictionary= new Dictionary<string, int[]>() {
+            shapeDictionary = new Dictionary<string, int[]>() {
                 { "outb", new int[] { 5, 6 } },
             };
-            somethingWrong= false;
+            somethingWrong = false;
             try
             {
                 TryModelWithCustomShapesHelper(shapeDictionary);
             }
             catch
             {
-                somethingWrong= true;
+                somethingWrong = true;
             }
             Assert.True(somethingWrong);
 
             // Case 4: this shape works with output shape [1, 1, 1, 5] loaded from the model.
-            shapeDictionary= new Dictionary<string, int[]>() {
+            shapeDictionary = new Dictionary<string, int[]>() {
                 { "outb", new int[] { -1, -1, -1, -1 } },
             };
-            somethingWrong= false;
+            somethingWrong = false;
             try
             {
                 TryModelWithCustomShapesHelper(shapeDictionary);
             }
             catch
             {
-                somethingWrong= true;
+                somethingWrong = true;
             }
             Assert.False(somethingWrong);
         }

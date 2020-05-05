@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 using System;
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Running;
 using Microsoft.ML.Internal.CpuMath;
 
 namespace Microsoft.ML.CpuMath.PerformanceTests
@@ -105,7 +104,7 @@ namespace Microsoft.ML.CpuMath.PerformanceTests
             }
 
             testMatrixAligned = new AlignedArray(matrixLength * matrixLength, align);
-            testMatrixAligned.CopyFrom(src.AsSpan(0, (matrixLength - 1) * ( matrixLength - 1)));
+            testMatrixAligned.CopyFrom(src.AsSpan(0, (matrixLength - 1) * (matrixLength - 1)));
 
             testSrcVectorAligned = new AlignedArray(matrixLength, align);
             testSrcVectorAligned.CopyFrom(src1.AsSpan(0, matrixLength - 1)); // odd input

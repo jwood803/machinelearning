@@ -124,7 +124,8 @@ namespace Microsoft.ML.Tests.TrainerEstimators
         }
 
 
-        private void CheckValidCalibratedData(IDataView scoredData, ITransformer transformer){
+        private void CheckValidCalibratedData(IDataView scoredData, ITransformer transformer)
+        {
 
             var calibratedData = transformer.Transform(scoredData).Preview();
 

@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using Microsoft.ML.Internal.Utilities;
 using Microsoft.ML.Model;
 using Microsoft.ML.Runtime;
@@ -77,7 +76,7 @@ namespace Microsoft.ML.Data
                     foreach (var annotation in annotations.Schema)
                     {
                         var info = Utils.MarshalInvoke(_getAnnotationInfoMethodInfo, annotation.Type.RawType, annotation.Name, annotations);
-                        schemaDefinitionCol.AddAnnotation(annotation.Name , info);
+                        schemaDefinitionCol.AddAnnotation(annotation.Name, info);
                     }
                 }
             }

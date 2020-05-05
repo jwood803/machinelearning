@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using Microsoft.Extensions.Options;
 using Microsoft.ML;
 
@@ -21,7 +20,7 @@ namespace Microsoft.Extensions.ML
         private readonly MLOptions _mlContextOptions;
         private readonly IOptionsFactory<PredictionEnginePoolOptions<TData, TPrediction>> _predictionEngineOptions;
         private readonly IServiceProvider _serviceProvider;
-        private readonly PoolLoader<TData,TPrediction> _defaultEnginePool;
+        private readonly PoolLoader<TData, TPrediction> _defaultEnginePool;
         private readonly ConcurrentDictionary<string, PoolLoader<TData, TPrediction>> _namedPools;
 
         public PredictionEnginePool(IServiceProvider serviceProvider,
@@ -95,7 +94,7 @@ namespace Microsoft.Extensions.ML
                     throw new ArgumentException("You need to configure a default, not named, model before you use this method.");
                 }
 
-               return _defaultEnginePool.PredictionEnginePool.Get();
+                return _defaultEnginePool.PredictionEnginePool.Get();
             }
 
             //Here we are in the world of named models where the model hasn't been built yet.

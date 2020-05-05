@@ -645,7 +645,7 @@ namespace Microsoft.ML.RunTests
         [Fact]
         public void SavePipeInvertHash()
         {
-            string pathData = DeleteOutputPath("SavePipe","InvertHash-Data.txt");
+            string pathData = DeleteOutputPath("SavePipe", "InvertHash-Data.txt");
             // Four columns. First "A" with words starting with "a" (for easy identification), second
             // "K" with an explicit key type, third "E" a column that has all missing values, and fourth
             // "B" with words starting with "b".

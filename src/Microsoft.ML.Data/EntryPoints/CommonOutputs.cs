@@ -204,7 +204,7 @@ namespace Microsoft.ML.EntryPoints
         /// </summary>
         /// <typeparam name="TOut">The output class of the macro.</typeparam>
         public sealed class MacroOutput<TOut> : MacroOutput
-        {}
+        { }
 
         /// <summary>
         /// The common output class for all evaluators.

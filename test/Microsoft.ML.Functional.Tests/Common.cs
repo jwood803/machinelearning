@@ -316,7 +316,7 @@ namespace Microsoft.ML.Functional.Tests
                     // to roll our own float equality checker.
                     Assert.Equal(array1[i], array2[i]);
                 }
-                catch(EqualException)
+                catch (EqualException)
                 {
                     mismatch = true;
                     break;

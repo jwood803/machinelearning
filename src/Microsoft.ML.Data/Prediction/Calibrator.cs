@@ -521,7 +521,7 @@ namespace Microsoft.ML.Calibrators
             Type genericType = typeof(FeatureWeightsCalibratedModelParameters<,>);
             var genericInstance = CreateCalibratedModelParameters.Create(env, ctx, predictor, calibrator, genericType);
 
-            return (CalibratedModelParametersBase) genericInstance;
+            return (CalibratedModelParametersBase)genericInstance;
         }
 
         void ICanSaveModel.Save(ModelSaveContext ctx)
@@ -542,7 +542,7 @@ namespace Microsoft.ML.Calibrators
     /// Encapsulates a predictor and a calibrator that implement <see cref="IParameterMixer"/>.
     /// Its implementation of <see cref="IParameterMixer.CombineParameters"/> combines both the predictors and the calibrators.
     /// </summary>
-    [PredictionTransformerLoadType(typeof(CalibratedModelParametersBase <,>))]
+    [PredictionTransformerLoadType(typeof(CalibratedModelParametersBase<,>))]
     internal sealed class ParameterMixingCalibratedModelParameters<TSubModel, TCalibrator> :
         ValueMapperCalibratedModelParametersBase<TSubModel, TCalibrator>,
         IParameterMixer<float>,
@@ -598,7 +598,7 @@ namespace Microsoft.ML.Calibrators
             Type genericType = typeof(ParameterMixingCalibratedModelParameters<,>);
             object genericInstance = CreateCalibratedModelParameters.Create(env, ctx, predictor, calibrator, genericType);
 
-            return (CalibratedModelParametersBase) genericInstance;
+            return (CalibratedModelParametersBase)genericInstance;
         }
 
         void ICanSaveModel.Save(ModelSaveContext ctx)
@@ -709,7 +709,7 @@ namespace Microsoft.ML.Calibrators
             }
 
             private Delegate GetPredictorGetter<T>(DataViewRow input, int col)
-                =>input.GetGetter<T>(input.Schema[col]);
+                => input.GetGetter<T>(input.Schema[col]);
 
             private Delegate GetProbGetter(DataViewRow input)
             {

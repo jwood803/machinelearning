@@ -17,7 +17,7 @@ namespace Microsoft.ML.TestFrameworkCommon
             this._diagnosticMessageSink = diagnosticMessageSink;
         }
 
-        public IEnumerable<IXunitTestCase> Discover(ITestFrameworkDiscoveryOptions discoveryOptions, 
+        public IEnumerable<IXunitTestCase> Discover(ITestFrameworkDiscoveryOptions discoveryOptions,
             ITestMethod testMethod, IAttributeInfo factAttribute)
         {
             //by default, retry failed tests at max 2 times

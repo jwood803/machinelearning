@@ -141,7 +141,7 @@ namespace Microsoft.ML.Internal.Utilities
                 catch (Exception ex)
                 {
                     // ignore any Exception and retrying download
-                    ch.Warning($"{i+1} - th try: Dowload {fileName} from {url} fail with exception {ex.Message}");
+                    ch.Warning($"{i + 1} - th try: Dowload {fileName} from {url} fail with exception {ex.Message}");
                 }
             }
 
@@ -288,7 +288,7 @@ namespace Microsoft.ML.Internal.Utilities
                         task.Wait();
                         int count = task.Result;
 
-                        if(count <= 0)
+                        if (count <= 0)
                         {
                             break;
                         }

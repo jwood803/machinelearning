@@ -2,9 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using Xunit;
 using System.Collections.Generic;
 using Microsoft.ML.Transforms.Text;
+using Xunit;
 
 namespace Microsoft.ML.Scenarios
 {
@@ -44,7 +44,7 @@ namespace Microsoft.ML.Scenarios
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 });
 
-            Assert.Equal(prediction.Text2, new float[] {2, 2, 2, 2, 2, 2, 1, 1});
+            Assert.Equal(prediction.Text2, new float[] { 2, 2, 2, 2, 2, 2, 1, 1 });
         }
 
         [Fact]

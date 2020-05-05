@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -210,7 +209,7 @@ namespace Microsoft.ML.Tests.Transformers
 
             var options = new TextFeaturizingEstimator.Options()
             {
-                CharFeatureExtractor = new WordBagEstimator.Options() { NgramLength = 1},
+                CharFeatureExtractor = new WordBagEstimator.Options() { NgramLength = 1 },
                 Norm = TextFeaturizingEstimator.NormFunction.L2,
                 OutputTokensColumnName = "OutputTokens"
             };

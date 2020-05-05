@@ -216,7 +216,7 @@ namespace Microsoft.ML.Data
                 _columns = builder._columns.ToArray();
 
                 var schemaBuilder = new DataViewSchema.Builder();
-                for(int i=0; i< _columns.Length; i++)
+                for (int i = 0; i < _columns.Length; i++)
                 {
                     var meta = new DataViewSchema.Annotations.Builder();
 

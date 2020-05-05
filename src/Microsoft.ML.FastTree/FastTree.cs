@@ -3117,7 +3117,7 @@ namespace Microsoft.ML.Trainers.FastTree
         }
         bool ISingleCanSaveOnnx.SaveAsOnnx(OnnxContext ctx, string[] outputNames, string featureColumn)
         {
-            return SaveAsOnnx(ctx,outputNames,featureColumn);
+            return SaveAsOnnx(ctx, outputNames, featureColumn);
         }
 
         void ICanSaveSummary.SaveSummary(TextWriter writer, RoleMappedSchema schema)

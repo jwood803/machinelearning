@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Microsoft.ML;
 using Microsoft.ML.Data;
-using Microsoft.ML.SamplesUtils;
 using Microsoft.ML.Transforms;
 
 namespace Samples.Dynamic

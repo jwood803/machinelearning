@@ -752,7 +752,7 @@ namespace Microsoft.ML.Data
         {
             Host.AssertNonEmpty(ScoreCol);
 
-            var type = schema[(int) ScoreIndex].Type;
+            var type = schema[(int)ScoreIndex].Type;
             if (!(type is VectorDataViewType vectorType) || !vectorType.IsKnownSize || vectorType.ItemType != NumberDataViewType.Single)
                 throw Host.ExceptSchemaMismatch(nameof(schema), "score", ScoreCol, "known-size vector of Single", type.ToString());
         }

@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.ML;
 using Microsoft.ML.AutoML;
 using Microsoft.ML.CodeGenerator.Utilities;
 using Microsoft.ML.Data;
@@ -73,7 +70,7 @@ namespace Microsoft.ML.CodeGenerator.Tests
                 await file.FlushAsync();
                 file.Close();
                 var context = new MLContext();
-                var dataView = context.Data.LoadFromTextFile<TestClass>(filePath,separatorChar:',', hasHeader: true);
+                var dataView = context.Data.LoadFromTextFile<TestClass>(filePath, separatorChar: ',', hasHeader: true);
                 var columnInference = new ColumnInferenceResults()
                 {
                     ColumnInformation = new ColumnInformation()
@@ -100,7 +97,7 @@ namespace Microsoft.ML.CodeGenerator.Tests
         [Fact]
         public void NormalizeTest()
         {
-            var testStrArray = new string[] { "Abc Abc", "abc ABC", "12", "12.3", "1AB .C"};
+            var testStrArray = new string[] { "Abc Abc", "abc ABC", "12", "12.3", "1AB .C" };
             var expectedStrArray = new string[] { "Abc_Abc", "Abc_ABC", "_12", "_12_3", "_1AB__C" };
             for (int i = 0; i != expectedStrArray.Count(); ++i)
             {

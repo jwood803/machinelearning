@@ -2,10 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using Microsoft.ML;
+using Microsoft.ML.Data;
 using Microsoft.ML.Trainers;
 using Xunit;
-using Microsoft.ML.Data;
 
 namespace Microsoft.ML.Tests.TrainerEstimators
 {
@@ -39,7 +38,7 @@ namespace Microsoft.ML.Tests.TrainerEstimators
 
             var binaryTrainData = binaryPipe.Fit(binaryData).Transform(binaryData);
             var apTrainer = ML.BinaryClassification.Trainers.AveragedPerceptron(
-                new AveragedPerceptronTrainer.Options{ LearningRate = 0.5f });
+                new AveragedPerceptronTrainer.Options { LearningRate = 0.5f });
             TestEstimatorCore(apTrainer, binaryTrainData);
 
             var apModel = apTrainer.Fit(binaryTrainData);

@@ -45,7 +45,7 @@ namespace Microsoft.ML.Core.Tests.UnitTests
             int[] nullX = null;
             Assert.True(Utils.IsMonotonicallyIncreasing(nullX));
         }
-        
+
         [Fact]
         [TestCategory("Utilities")]
         public void CheckIsMonotonicallyIncreasingFloat()
@@ -67,7 +67,7 @@ namespace Microsoft.ML.Core.Tests.UnitTests
             x[1] = x[6];
             Assert.False(Utils.IsMonotonicallyIncreasing(x));
             x[1] = x1Temp;
-            
+
             // NaN: `Array.Sort()` will put NaNs into the first position,
             // but we want to guarantee that NaNs aren't allowed in these arrays.
             var x0Temp = x[0];
@@ -233,7 +233,7 @@ namespace Microsoft.ML.Core.Tests.UnitTests
         public void CheckAreEqualFloat()
         {
             // A sorted (increasing) array
-            float[] x = Enumerable.Range(0, 10).Select(i => (float) i).ToArray();
+            float[] x = Enumerable.Range(0, 10).Select(i => (float)i).ToArray();
             float[] y = Enumerable.Range(0, 10).Select(i => (float)i).ToArray();
             Assert.True(Utils.AreEqual(x, y));
 

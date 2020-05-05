@@ -2,16 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.IO;
 using System.Linq;
 using Microsoft.ML.Data;
-using Microsoft.ML.TestFrameworkCommon;
-using Microsoft.ML.TestFramework.Attributes;
-using Xunit;
-using static Microsoft.ML.DataOperationsCatalog;
 using Microsoft.ML.TestFramework;
+using Microsoft.ML.TestFramework.Attributes;
+using Microsoft.ML.TestFrameworkCommon;
+using Xunit;
 using Xunit.Abstractions;
+using static Microsoft.ML.DataOperationsCatalog;
 
 namespace Microsoft.ML.AutoML.Test
 {
@@ -77,7 +75,7 @@ namespace Microsoft.ML.AutoML.Test
             Assert.Equal(TextDataViewType.Instance, scoredData.Schema[DefaultColumnNames.PredictedLabel].Type);
         }
 
-        [Fact(Skip ="Takes too much time, ~10 minutes.")]
+        [Fact(Skip = "Takes too much time, ~10 minutes.")]
         public void AutoFitImageClassification()
         {
             // This test executes the code path that model builder code will take to get a model using image 

@@ -132,23 +132,23 @@ namespace Microsoft.ML.Internal.Internallearn
 
             switch (s.ToLower())
             {
-            case "space":
-                return ' ';
-            case "tab":
-                return '\t';
-            case "comma":
-                return ',';
-            case "colon":
-                return ':';
-            case "semicolon":
-                return ';';
-            case "bar": // VW format
-                return '|';
-            default:
-                // REVIEW: This is bad - why do we simply ignore unexpected values?
-                if (s.Length == 1)
-                    return s[0];
-                return default(char);
+                case "space":
+                    return ' ';
+                case "tab":
+                    return '\t';
+                case "comma":
+                    return ',';
+                case "colon":
+                    return ':';
+                case "semicolon":
+                    return ';';
+                case "bar": // VW format
+                    return '|';
+                default:
+                    // REVIEW: This is bad - why do we simply ignore unexpected values?
+                    if (s.Length == 1)
+                        return s[0];
+                    return default(char);
             }
         }
     }

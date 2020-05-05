@@ -3,13 +3,12 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using Microsoft.ML.Data;
 using BenchmarkDotNet.Attributes;
+using Microsoft.ML.Data;
 using Microsoft.ML.Transforms.Text;
-using Xunit;
 
 namespace Microsoft.ML.Benchmarks
 {
@@ -32,7 +31,7 @@ namespace Microsoft.ML.Benchmarks
             path = CreateRandomFile(path);
 
             var columns = new List<TextLoader.Column>();
-            for(int i = 0; i < _numColumns; i++)
+            for (int i = 0; i < _numColumns; i++)
             {
                 columns.Add(new TextLoader.Column($"Column{i}", DataKind.String, i));
             }
@@ -71,7 +70,7 @@ namespace Microsoft.ML.Benchmarks
                 featurizers.Add(featurizer);
             }
 
-            IEstimator<ITransformer>  pipeline = featurizers.First();
+            IEstimator<ITransformer> pipeline = featurizers.First();
             foreach (var featurizer in featurizers.Skip(1))
             {
                 pipeline = pipeline.Append(featurizer);
@@ -126,7 +125,7 @@ namespace Microsoft.ML.Benchmarks
 
             using (StreamWriter file = new StreamWriter(path))
             {
-                for(int i = 0; i < _numRows; i++)
+                for (int i = 0; i < _numRows; i++)
                     file.WriteLine(CreateRandomLine(_numColumns, random));
             }
             return path;
@@ -135,7 +134,7 @@ namespace Microsoft.ML.Benchmarks
         public static string CreateRandomLine(int columns, Random random)
         {
             var lineSB = new System.Text.StringBuilder();
-            for(int i = 0; i < columns; i++)
+            for (int i = 0; i < columns; i++)
             {
                 lineSB.Append(CreateRandomColumn(random, random.Next(100)));
                 lineSB.Append(",");
@@ -153,12 +152,12 @@ namespace Microsoft.ML.Benchmarks
             var columnSB = new System.Text.StringBuilder();
             int wordLength;
 
-            for(int i = 0; i < numwords; i++)
+            for (int i = 0; i < numwords; i++)
             {
                 wordLength = random.Next(1, _maxWordLength);
-                for(int j = 0; j < wordLength; j++)
+                for (int j = 0; j < wordLength; j++)
                     columnSB.Append(characters[random.Next(characters.Length)]);
-                
+
                 columnSB.Append(" ");
             }
 

@@ -4,7 +4,6 @@
 
 using System.Collections.Concurrent;
 using System.Collections.Immutable;
-using System.Diagnostics;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
@@ -89,7 +88,7 @@ namespace Microsoft.ML.InternalCodeAnalyzer
 
             private bool ExtendsBaseTestClass(INamedTypeSymbol namedType)
             {
-                if (_baseTestClass is null && 
+                if (_baseTestClass is null &&
                     _FTbaseTestClass is null)
                     return false;
 

@@ -49,7 +49,7 @@ namespace Microsoft.ML.InternalCodeAnalyzer
 
                 if (attribute == null)
                     continue;
-                
+
                 context.RegisterSymbolAction(c => AnalyzeCore(c, attribute), SymbolKind.NamedType, SymbolKind.Method, SymbolKind.Field, SymbolKind.Property);
             }
         }

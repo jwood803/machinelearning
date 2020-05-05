@@ -210,7 +210,7 @@ namespace Microsoft.ML.Tests.Transformers
             var transformer = est.Fit(dataView);
             dataView = transformer.Transform(dataView);
             var pipe = ML.Transforms.Conversion.MapKeyToVector(
-                new KeyToVectorMappingEstimator.ColumnOptions("CatA", "TermA",false),
+                new KeyToVectorMappingEstimator.ColumnOptions("CatA", "TermA", false),
                 new KeyToVectorMappingEstimator.ColumnOptions("CatB", "TermB", true)
             );
             var result = pipe.Fit(dataView).Transform(dataView);

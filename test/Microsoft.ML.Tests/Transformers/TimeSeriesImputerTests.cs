@@ -2,15 +2,13 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using Microsoft.ML.Data;
-using Microsoft.ML.RunTests;
-using Microsoft.ML.Featurizers;
 using System;
+using Microsoft.ML.Data;
+using Microsoft.ML.Featurizers;
+using Microsoft.ML.RunTests;
+using Microsoft.ML.TestFramework.Attributes;
 using Xunit;
 using Xunit.Abstractions;
-using System.Drawing.Printing;
-using System.Linq;
-using Microsoft.ML.TestFramework.Attributes;
 
 namespace Microsoft.ML.Tests.Transformers
 {
@@ -43,7 +41,7 @@ namespace Microsoft.ML.Tests.Transformers
             public string grainA;
             public float dataA;
         }
-        
+
         private class TimeSeriesOneGrainStringInput
         {
             public long date;
@@ -55,15 +53,15 @@ namespace Microsoft.ML.Tests.Transformers
         public void NotImputeOneColumn()
         {
             MLContext mlContext = new MLContext(1);
-            var dataList = new[] { 
-                new TimeSeriesOneGrainInput() { date = 25, grainA = "A", dataA = 1, dataB = 2.0f, dataC = 5 }, 
-                new TimeSeriesOneGrainInput() { date = 26, grainA = "A", dataA = 1, dataB = 2.0f, dataC = 5 }, 
-                new TimeSeriesOneGrainInput() { date = 28, grainA = "A", dataA = 1, dataB = 2.0f, dataC = 5 } 
+            var dataList = new[] {
+                new TimeSeriesOneGrainInput() { date = 25, grainA = "A", dataA = 1, dataB = 2.0f, dataC = 5 },
+                new TimeSeriesOneGrainInput() { date = 26, grainA = "A", dataA = 1, dataB = 2.0f, dataC = 5 },
+                new TimeSeriesOneGrainInput() { date = 28, grainA = "A", dataA = 1, dataB = 2.0f, dataC = 5 }
             };
             var data = mlContext.Data.LoadFromEnumerable(dataList);
 
             // Build the pipeline, fit, and transform it.
-            var pipeline = mlContext.Transforms.ReplaceMissingTimeSeriesValues("date", new string[] { "grainA" }, new string[] { "dataB"});
+            var pipeline = mlContext.Transforms.ReplaceMissingTimeSeriesValues("date", new string[] { "grainA" }, new string[] { "dataB" });
             var model = pipeline.Fit(data);
             var output = model.Transform(data);
             var schema = output.Schema;
@@ -90,20 +88,20 @@ namespace Microsoft.ML.Tests.Transformers
             TestEstimatorCore(pipeline, data);
             Done();
         }
-        
+
         [NotCentOS7Fact]
         public void ImputeOnlyOneColumn()
         {
             MLContext mlContext = new MLContext(1);
-            var dataList = new[] { 
-                new TimeSeriesOneGrainInput() { date = 25, grainA = "A", dataA = 1, dataB = 2.0f, dataC = 5 }, 
-                new TimeSeriesOneGrainInput() { date = 26, grainA = "A", dataA = 1, dataB = 2.0f, dataC = 5 }, 
-                new TimeSeriesOneGrainInput() { date = 28, grainA = "A", dataA = 1, dataB = 2.0f, dataC = 5 } 
+            var dataList = new[] {
+                new TimeSeriesOneGrainInput() { date = 25, grainA = "A", dataA = 1, dataB = 2.0f, dataC = 5 },
+                new TimeSeriesOneGrainInput() { date = 26, grainA = "A", dataA = 1, dataB = 2.0f, dataC = 5 },
+                new TimeSeriesOneGrainInput() { date = 28, grainA = "A", dataA = 1, dataB = 2.0f, dataC = 5 }
             };
             var data = mlContext.Data.LoadFromEnumerable(dataList);
 
             // Build the pipeline, fit, and transform it.
-            var pipeline = mlContext.Transforms.ReplaceMissingTimeSeriesValues("date", new string[] { "grainA" }, new string[] { "dataB"}, TimeSeriesImputerEstimator.FilterMode.Include);
+            var pipeline = mlContext.Transforms.ReplaceMissingTimeSeriesValues("date", new string[] { "grainA" }, new string[] { "dataB" }, TimeSeriesImputerEstimator.FilterMode.Include);
             var model = pipeline.Fit(data);
             var output = model.Transform(data);
             var schema = output.Schema;
@@ -189,7 +187,7 @@ namespace Microsoft.ML.Tests.Transformers
             TestEstimatorCore(pipeline, data);
             Done();
         }
-        
+
         [NotCentOS7Fact]
         public void DateTimeSupportForwardfill()
         {
@@ -244,7 +242,7 @@ namespace Microsoft.ML.Tests.Transformers
             TestEstimatorCore(pipeline, data);
             Done();
         }
-        
+
         [NotCentOS7Fact]
         public void EntryPoint()
         {
@@ -254,9 +252,10 @@ namespace Microsoft.ML.Tests.Transformers
                 new { ts = 3L, grain = 1970, c3 = 15, c4 = 16},
                 new { ts = 5L, grain = 1970, c3 = 20, c4 = 19}
             };
-            
+
             var data = mlContext.Data.LoadFromEnumerable(dataList);
-            TimeSeriesImputerEstimator.Options options = new TimeSeriesImputerEstimator.Options() { 
+            TimeSeriesImputerEstimator.Options options = new TimeSeriesImputerEstimator.Options()
+            {
                 TimeSeriesColumn = "ts",
                 GrainColumns = new[] { "grain" },
                 FilterColumns = new[] { "c3", "c4" },

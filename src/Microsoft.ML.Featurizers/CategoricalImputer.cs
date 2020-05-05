@@ -6,7 +6,6 @@
 // This functionality will be integrated into the MissingValueReplacer over the next several weeks.
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -18,7 +17,6 @@ using Microsoft.ML.Data;
 using Microsoft.ML.EntryPoints;
 using Microsoft.ML.Featurizers;
 using Microsoft.ML.Internal.Utilities;
-using Microsoft.ML.Model.OnnxConverter;
 using Microsoft.ML.Runtime;
 using Microsoft.ML.Transforms;
 using static Microsoft.ML.Featurizers.CommonExtensions;

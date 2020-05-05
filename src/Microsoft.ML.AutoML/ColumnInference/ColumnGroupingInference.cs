@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Microsoft.ML.Data;
 using static Microsoft.ML.Data.TextLoader;
 
@@ -66,7 +65,7 @@ namespace Microsoft.ML.AutoML
                         purposeGroupId = GetPurposeGroupId(t.Item1.ColumnIndex, t.Item2.Purpose)
                     }
                     into g
-                    select g;
+                select g;
 
             foreach (var g in grouped)
             {

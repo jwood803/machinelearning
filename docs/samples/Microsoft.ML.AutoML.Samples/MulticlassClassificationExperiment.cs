@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using Microsoft.ML.AutoML;
 using Microsoft.ML.Data;
 
 namespace Microsoft.ML.AutoML.Samples
@@ -59,7 +58,7 @@ namespace Microsoft.ML.AutoML.Samples
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
         }
-        
+
         private static void PrintMetrics(MulticlassClassificationMetrics metrics)
         {
             Console.WriteLine($"LogLoss: {metrics.LogLoss}");

@@ -512,7 +512,7 @@ namespace Microsoft.ML
                 if (!_entries.TryGetValue(pathEnt, out entry))
                 {
                     //Read old zip file that use backslash in filename
-                    var pathEntTmp = pathEnt.Replace("/","\\");
+                    var pathEntTmp = pathEnt.Replace("/", "\\");
                     if (!_entries.TryGetValue(pathEntTmp, out entry))
                     {
                         return null;

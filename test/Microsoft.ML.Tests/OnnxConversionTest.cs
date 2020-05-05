@@ -9,7 +9,6 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using Google.Protobuf;
-using Google.Protobuf.WellKnownTypes;
 using Microsoft.ML.Data;
 using Microsoft.ML.EntryPoints;
 using Microsoft.ML.Model.OnnxConverter;
@@ -72,7 +71,8 @@ namespace Microsoft.ML.Tests
             var dynamicPipeline =
                 mlContext.Transforms.NormalizeMinMax("FeatureVector")
                 .AppendCacheCheckpoint(mlContext)
-                .Append(mlContext.Regression.Trainers.Sdca(new SdcaRegressionTrainer.Options() {
+                .Append(mlContext.Regression.Trainers.Sdca(new SdcaRegressionTrainer.Options()
+                {
                     LabelColumnName = "Target",
                     FeatureColumnName = "FeatureVector",
                     NumberOfThreads = 1
@@ -496,7 +496,7 @@ namespace Microsoft.ML.Tests
             };
             var dataView = mlContext.Data.LoadFromEnumerable(samples);
 
-            var pipe = mlContext.Transforms.NormalizeLpNorm(nameof(DataPoint.Features), norm:norm, ensureZeroMean: ensureZeroMean);
+            var pipe = mlContext.Transforms.NormalizeLpNorm(nameof(DataPoint.Features), norm: norm, ensureZeroMean: ensureZeroMean);
 
             var model = pipe.Fit(dataView);
             var transformedData = model.Transform(dataView);
@@ -666,7 +666,8 @@ namespace Microsoft.ML.Tests
             var dynamicPipeline =
                 mlContext.Transforms.NormalizeMinMax("FeatureVector")
                 .AppendCacheCheckpoint(mlContext)
-                .Append(mlContext.Regression.Trainers.Sdca(new SdcaRegressionTrainer.Options() {
+                .Append(mlContext.Regression.Trainers.Sdca(new SdcaRegressionTrainer.Options()
+                {
                     LabelColumnName = "Target",
                     FeatureColumnName = "FeatureVector",
                     NumberOfThreads = 1
@@ -1015,7 +1016,7 @@ namespace Microsoft.ML.Tests
             var model = pipeline.Fit(dataView);
             var transformedData = model.Transform(dataView);
             var onnxModel = mlContext.Model.ConvertToOnnxProtobuf(model, dataView);
-            
+
             // Compare model scores produced by ML.NET and ONNX's runtime. 
             var onnxFileName = $"TokenizingByCharacters.onnx";
             var onnxModelPath = GetOutputPath(onnxFileName);
@@ -1082,7 +1083,7 @@ namespace Microsoft.ML.Tests
             var mlContext = new MLContext(seed: 1);
             string filePath = GetDataPath("type-conversion.txt");
 
-            TextLoader.Column[] columns = new []
+            TextLoader.Column[] columns = new[]
             {
                 new TextLoader.Column("Value", fromKind, 0, 0)
             };
@@ -1399,7 +1400,7 @@ namespace Microsoft.ML.Tests
                     CompareSelectedColumns<float>(columnName, columnName, transformedData, onnxResult, 3);
 
                     VBuffer<ReadOnlyMemory<char>> mlNetSlots = default;
-                    VBuffer<ReadOnlyMemory<char>> onnxSlots= default;
+                    VBuffer<ReadOnlyMemory<char>> onnxSlots = default;
                     transformedData.Schema[columnName].GetSlotNames(ref mlNetSlots);
                     onnxResult.Schema[columnName].GetSlotNames(ref onnxSlots);
                     Assert.Equal(mlNetSlots.Length, onnxSlots.Length);

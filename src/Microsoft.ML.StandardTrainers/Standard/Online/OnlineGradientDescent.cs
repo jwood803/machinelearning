@@ -148,7 +148,7 @@ namespace Microsoft.ML.Trainers
             {
                 LearningRate = learningRate,
                 DecreaseLearningRate = decreaseLearningRate,
-                L2Regularization= l2Regularization,
+                L2Regularization = l2Regularization,
                 NumberOfIterations = numberOfIterations,
                 LabelColumnName = labelColumn,
                 FeatureColumnName = featureColumn,

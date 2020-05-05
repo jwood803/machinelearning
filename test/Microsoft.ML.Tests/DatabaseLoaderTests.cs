@@ -9,7 +9,6 @@ using System.Data.SQLite;
 using System.IO;
 using System.Runtime.InteropServices;
 using Microsoft.ML.Data;
-using Microsoft.ML.RunTests;
 using Microsoft.ML.TestFramework;
 using Microsoft.ML.TestFramework.Attributes;
 using Microsoft.ML.TestFrameworkCommon;

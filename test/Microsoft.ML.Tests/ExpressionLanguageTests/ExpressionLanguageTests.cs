@@ -15,14 +15,14 @@ using System.Text;
 using System.Threading;
 using Microsoft.ML;
 using Microsoft.ML.Data;
-using Microsoft.ML.Data.IO;
 using Microsoft.ML.Data.Conversion;
+using Microsoft.ML.Data.IO;
 using Microsoft.ML.Internal.Utilities;
-using Microsoft.ML.Runtime;
-using Microsoft.ML.Transforms;
 using Microsoft.ML.RunTests;
-using Microsoft.ML.Tests;
+using Microsoft.ML.Runtime;
 using Microsoft.ML.TestFramework.Attributes;
+using Microsoft.ML.Tests;
+using Microsoft.ML.Transforms;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -210,7 +210,7 @@ namespace Microsoft.ML.Tests
                             TestFuncs1.Writer = null;
                         }
 
-                        LDone:
+                    LDone:
                         wrt.WriteLine("===== End {0} =====", scriptName);
                     }
                 }

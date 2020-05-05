@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using Microsoft.ML.CommandLine;
 using Microsoft.ML.Data;
@@ -128,7 +127,7 @@ namespace Microsoft.ML.Transforms.TimeSeries
 
             public SsaForecastingBase(SsaForecastingOptions options, string name, IHostEnvironment env, SsaForecastingBaseWrapper parent)
                 : base(options.TrainSize, 0, options.Source, options.Name, options.ConfidenceLowerBoundColumn,
-                      options.ConfidenceUpperBoundColumn, name, options.VariableHorizon ? 0: options.Horizon, env)
+                      options.ConfidenceUpperBoundColumn, name, options.VariableHorizon ? 0 : options.Horizon, env)
             {
                 Host.CheckUserArg(0 <= options.DiscountFactor && options.DiscountFactor <= 1, nameof(options.DiscountFactor), "Must be in the range [0, 1].");
                 IsAdaptive = options.IsAdaptive;
@@ -283,7 +282,7 @@ namespace Microsoft.ML.Transforms.TimeSeries
                     dst3 = new VBuffer<float>(_parentForecaster.Horizon, max);
                 }
 
-                public override void Forecast( ref VBuffer<float> dst)
+                public override void Forecast(ref VBuffer<float> dst)
                 {
                     int horizon = LocalHorizon ?? _parentForecaster.Horizon;
                     dst = new VBuffer<float>(horizon, ((AdaptiveSingularSpectrumSequenceModelerInternal)_model).Forecast(horizon));

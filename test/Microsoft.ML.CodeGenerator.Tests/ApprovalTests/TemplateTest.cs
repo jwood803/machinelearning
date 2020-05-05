@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using System.Text;
 using ApprovalTests;
 using ApprovalTests.Reporters;
 using Microsoft.ML.CodeGenerator.Templates.Console;

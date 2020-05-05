@@ -4,7 +4,6 @@
 
 using System;
 using System.IO;
-using Microsoft.ML.CodeGenerator.Utilities;
 
 namespace Microsoft.ML.CodeGenerator.CodeGenerator.CSharp
 {

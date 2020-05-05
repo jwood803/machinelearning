@@ -44,7 +44,7 @@ namespace Microsoft.ML.Functional.Tests
             IDataView transformedData;
             RegressionPredictionTransformer<LinearRegressionModelParameters> linearPredictor;
 
-            if(saveModel)
+            if (saveModel)
             {
                 ITransformer loadedModel;
 

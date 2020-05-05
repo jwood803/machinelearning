@@ -198,7 +198,7 @@ namespace Microsoft.ML.RunTests
             [Argument(ArgumentType.Multiple, SignatureType = typeof(SignatureDataSaver))]
             public IComponentFactory<IDataSaver> sub = (IComponentFactory<IDataSaver>)CmdParser.CreateComponentFactory(
                 typeof(IComponentFactory<IDataSaver>),
-                typeof(SignatureDataSaver), 
+                typeof(SignatureDataSaver),
                 "Text");
 
             [Argument(ArgumentType.Multiple, SignatureType = typeof(SignatureDataSaver))]

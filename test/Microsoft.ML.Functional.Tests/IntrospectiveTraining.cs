@@ -81,7 +81,7 @@ namespace Microsoft.ML.Functional.Tests
             var pipeline = mlContext.Transforms.Text.FeaturizeText("Features", "SentimentText")
                 .AppendCacheCheckpoint(mlContext)
                 .Append(mlContext.BinaryClassification.Trainers.FastTree(
-                    new FastTreeBinaryTrainer.Options{ NumberOfLeaves = 5, NumberOfTrees= 3, NumberOfThreads = 1 }));
+                    new FastTreeBinaryTrainer.Options { NumberOfLeaves = 5, NumberOfTrees = 3, NumberOfThreads = 1 }));
 
             // Fit the pipeline.
             var model = pipeline.Fit(data);
@@ -299,7 +299,7 @@ namespace Microsoft.ML.Functional.Tests
             {
                 // It is possible to get the type at runtime.
                 Assert.IsType(expectedTypes[i], transformer);
-                
+
                 // It's also possible to inspect the schema output from the transform.
                 currentSchema = transformer.GetOutputSchema(currentSchema);
                 foreach (var expectedColumn in expectedColumns[i])
@@ -363,12 +363,12 @@ namespace Microsoft.ML.Functional.Tests
                 for (int i = 0; i < Adult.CategoricalFeatures.Length; i++)
                 {
                     // Fetch the categorical value.
-                    string value = (string) row.GetType().GetProperty(Adult.CategoricalFeatures[i]).GetValue(row, null);
+                    string value = (string)row.GetType().GetProperty(Adult.CategoricalFeatures[i]).GetValue(row, null);
                     Assert.Contains($"{i}:{value}", uniqueValues);
                 }
             }
         }
-        
+
         /// <summary>
         /// Introspective Training: I can create nested pipelines, and extract individual components.
         /// </summary>
@@ -422,9 +422,11 @@ namespace Microsoft.ML.Functional.Tests
         {
             return mlContext.Transforms.Conversion.MapValueToKey("Label")
                 .Append(mlContext.MulticlassClassification.Trainers.SdcaMaximumEntropy(
-                new SdcaMaximumEntropyMulticlassTrainer.Options {
+                new SdcaMaximumEntropyMulticlassTrainer.Options
+                {
                     MaximumNumberOfIterations = 10,
-                    NumberOfThreads = 1 }));
+                    NumberOfThreads = 1
+                }));
         }
     }
 }

@@ -74,7 +74,8 @@ namespace Microsoft.ML.Trainers.FastTree
         /// </summary>
         private protected bool LowerIsBetter { get; }
 
-        private protected float BestScore {
+        private protected float BestScore
+        {
             get { return _bestScore; }
             set
             {
@@ -339,7 +340,7 @@ namespace Microsoft.ML.Trainers.FastTree
         }
 
         internal override IEarlyStoppingCriterionFactory BuildFactory() => new Options() { Threshold = Threshold };
-}
+    }
 
     /// <summary>
     /// Low Progress (LP).
@@ -400,7 +401,7 @@ namespace Microsoft.ML.Trainers.FastTree
         }
 
         internal override IEarlyStoppingCriterionFactory BuildFactory() => new Options() { Threshold = Threshold, WindowSize = WindowSize };
-}
+    }
 
     /// <summary>
     /// Generality to Progress Ratio (PQ).

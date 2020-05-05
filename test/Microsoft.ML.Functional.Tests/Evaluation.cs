@@ -15,7 +15,7 @@ namespace Microsoft.ML.Functional.Tests
 {
     public class Evaluation : FunctionalTestBaseClass
     {
-        public Evaluation(ITestOutputHelper output): base(output)
+        public Evaluation(ITestOutputHelper output) : base(output)
         {
         }
 
@@ -235,7 +235,8 @@ namespace Microsoft.ML.Functional.Tests
 
             // Create a pipeline to train on the sentiment data.
             var pipeline = mlContext.Recommendation().Trainers.MatrixFactorization(
-                new MatrixFactorizationTrainer.Options{
+                new MatrixFactorizationTrainer.Options
+                {
                     MatrixColumnIndexColumnName = "MatrixColumnIndex",
                     MatrixRowIndexColumnName = "MatrixRowIndex",
                     LabelColumnName = "Label",

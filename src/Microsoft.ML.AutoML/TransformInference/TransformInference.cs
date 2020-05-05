@@ -407,7 +407,7 @@ namespace Microsoft.ML.AutoML
             }
 
             // include all numeric columns of type R4
-            foreach(var intermediateCol in intermediateCols)
+            foreach (var intermediateCol in intermediateCols)
             {
                 if (intermediateCol.Purpose == ColumnPurpose.NumericFeature &&
                     intermediateCol.Type.GetItemType() == NumberDataViewType.Single)
@@ -456,7 +456,7 @@ namespace Microsoft.ML.AutoML
                     continue;
                 }
 
-                for(var i = 0; ; i++)
+                for (var i = 0; ; i++)
                 {
                     var newColName = $"{desiredColName}{i}";
                     if (!existingColNames.Contains(newColName))

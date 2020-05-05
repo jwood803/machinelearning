@@ -70,7 +70,7 @@ namespace Microsoft.ML.Transforms
         public abstract class ControlZeroColumnBase : ColumnBase
         {
             // REVIEW: This only allows mapping either zero or min to zero. It might make sense to allow also max, midpoint and mean to be mapped to zero.
-            [Argument(ArgumentType.AtMostOnce, Name="FixZero", HelpText = "Whether to map zero to zero, preserving sparsity", ShortName = "zero")]
+            [Argument(ArgumentType.AtMostOnce, Name = "FixZero", HelpText = "Whether to map zero to zero, preserving sparsity", ShortName = "zero")]
             public bool? EnsureZeroUntouched;
 
             private protected override bool TryUnparseCore(StringBuilder sb)

@@ -97,7 +97,7 @@ namespace Microsoft.ML.RunTests
                 var calibrator = ((IComponentFactory<ICalibratorTrainer>)factory).CreateComponent(ml);
             }
         }
-    
+
         private delegate void SignatureSimpleComponent();
 
         private class SimpleArg

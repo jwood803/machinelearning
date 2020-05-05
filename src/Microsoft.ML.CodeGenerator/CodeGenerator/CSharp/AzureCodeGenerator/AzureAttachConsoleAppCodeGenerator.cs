@@ -2,21 +2,13 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using Microsoft.CodeAnalysis;
 using Microsoft.ML.AutoML;
 using Microsoft.ML.CodeGenerator.CodeGenerator.CSharp.Interface;
 using Microsoft.ML.CodeGenerator.CSharp;
 using Microsoft.ML.CodeGenerator.Templates.Azure.Console;
 using Microsoft.ML.CodeGenerator.Templates.Console;
 using Microsoft.ML.CodeGenerator.Utilities;
-using Microsoft.ML.Transforms;
-using Tensorflow.Operations.Losses;
 
 namespace Microsoft.ML.CodeGenerator.CodeGenerator.CSharp
 {

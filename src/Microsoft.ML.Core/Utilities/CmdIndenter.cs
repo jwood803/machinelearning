@@ -37,7 +37,7 @@ namespace Microsoft.ML.Internal.Utilities
             string[] tokens;
             if (!CmdParser.LexString(text, out tokens))
                 return false;
-            for (var i = 0; i < tokens.Length; )
+            for (var i = 0; i < tokens.Length;)
             {
                 //We in last token, or next token don't equal to '='.
                 if (i + 1 == tokens.Length || tokens[i + 1] != "=")

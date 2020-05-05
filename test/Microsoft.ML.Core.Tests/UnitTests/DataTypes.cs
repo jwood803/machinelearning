@@ -25,7 +25,7 @@ namespace Microsoft.ML.RunTests
         {
             var r4ToSB = Conversions.Instance.GetStringConversion<float>(NumberDataViewType.Single);
 
-            var txToR4 = Conversions.Instance.GetStandardConversion< ReadOnlyMemory<char>, float>(
+            var txToR4 = Conversions.Instance.GetStandardConversion<ReadOnlyMemory<char>, float>(
                 TextDataViewType.Instance, NumberDataViewType.Single, out bool identity2);
 
             Assert.NotNull(r4ToSB);

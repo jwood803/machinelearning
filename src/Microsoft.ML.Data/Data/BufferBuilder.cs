@@ -222,7 +222,7 @@ namespace Microsoft.ML.Data
             // Insert this one. Find the right place.
             // REVIEW: Should we ever use binary search?
             int ivDst = _count;
-            for (;;)
+            for (; ; )
             {
                 if (--ivDst < 0)
                     break;
@@ -268,7 +268,7 @@ namespace Microsoft.ML.Data
 
             int ivSrc = 0;
             int ivDst = 0;
-            for (;;)
+            for (; ; )
             {
                 if (ivSrc >= _count)
                 {

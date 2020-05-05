@@ -715,7 +715,7 @@ namespace Microsoft.ML.Transforms
 
                     opType = "Div";
                     string input = _ensureZeroMeans[iinfo] ? inputMinusMean : srcVariableName;
-                    var lStdDevNode = ctx.CreateNode(opType, new[] {input, stdDev }, new[] { dstVariableName }, ctx.GetNodeName(opType), "");
+                    var lStdDevNode = ctx.CreateNode(opType, new[] { input, stdDev }, new[] { dstVariableName }, ctx.GetNodeName(opType), "");
                 }
                 else
                 {

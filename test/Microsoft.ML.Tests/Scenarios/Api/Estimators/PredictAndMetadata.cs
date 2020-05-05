@@ -5,7 +5,6 @@
 using System;
 using System.Linq;
 using Microsoft.ML.Data;
-using Microsoft.ML.RunTests;
 using Microsoft.ML.TestFrameworkCommon;
 using Microsoft.ML.Trainers;
 using Xunit;
@@ -124,7 +123,7 @@ namespace Microsoft.ML.Tests.Scenarios.Api
 
             // Check that the SlotNames column is not there. 
             Assert.Null(scoredData2.Schema["Score"].Annotations.Schema.GetColumnOrNull(AnnotationUtils.Kinds.SlotNames));
-            
+
             //Assert that the confusion matrix has just ints, as class indicators, in the Annotations of the Count column
             Assert.Equal("0", metrics2.ConfusionMatrix.PredictedClassesIndicators[0].ToString());
             Assert.Equal("1", metrics2.ConfusionMatrix.PredictedClassesIndicators[1].ToString());

@@ -35,7 +35,7 @@ namespace Microsoft.ML.Internal.Internallearn
 
                 var metadataBuilder = new DataViewSchema.Annotations.Builder();
                 metadataBuilder.Add(AnnotationUtils.Kinds.SlotNames, _slotNamesType,
-                    (ref VBuffer<ReadOnlyMemory<char>> slotNames) => { GetSlotNames(0, ref slotNames); } );
+                    (ref VBuffer<ReadOnlyMemory<char>> slotNames) => { GetSlotNames(0, ref slotNames); });
                 var schemaBuilder = new DataViewSchema.Builder();
                 schemaBuilder.AddColumn(RoleMappedSchema.ColumnRole.Feature.Value, _colType, metadataBuilder.ToAnnotations());
                 FeatureNameCollectionSchema = schemaBuilder.ToSchema();

@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using Microsoft.ML.Internal.Utilities;
 using Microsoft.ML.Runtime;
 
@@ -222,7 +221,7 @@ namespace Microsoft.ML.Data
                 _currentCursor = Sources[_currentSourceIndex].GetRowCursor(columnsNeeded);
                 _currentIdGetter = _currentCursor.GetIdGetter();
 
-                foreach(var col in columnsNeeded)
+                foreach (var col in columnsNeeded)
                     Getters[col.Index] = CreateGetter(col.Index);
             }
 
@@ -324,7 +323,7 @@ namespace Microsoft.ML.Data
                 _sampler = new MultinomialWithoutReplacementSampler(Ch, counts, rand);
                 _currentSourceIndex = -1;
 
-                foreach(var col in columnsNeeded)
+                foreach (var col in columnsNeeded)
                     Getters[col.Index] = CreateGetter(col.Index);
             }
 

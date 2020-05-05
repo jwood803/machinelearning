@@ -225,7 +225,7 @@ namespace Microsoft.ML.Internal.Internallearn
             {
                 droppedSlots = droppedSlots.Concat(Enumerable.Range(SlotsMin[i], SlotsMax[i] - SlotsMin[i] + 1));
             }
-            return slots.Except(droppedSlots).Select(i=>(long)i);
+            return slots.Except(droppedSlots).Select(i => (long)i);
         }
     }
 }

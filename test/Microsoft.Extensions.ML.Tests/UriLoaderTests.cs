@@ -51,7 +51,7 @@ namespace Microsoft.Extensions.ML
             using IDisposable changeTokenRegistration = ChangeToken.OnChange(
                         () => loaderUnderTest.GetReloadToken(),
                         () => changed.Set());
-            
+
             Assert.True(changed.WaitOne(AsyncTestHelper.UnexpectedTimeout), "UriLoader ChangeToken didn't fire before the allotted time.");
         }
 
@@ -65,7 +65,7 @@ namespace Microsoft.Extensions.ML
 
             var loaderUnderTest = ActivatorUtilities.CreateInstance<UriLoaderMock>(sp);
 
-            loaderUnderTest.ETagMatches = (a,b) => true;
+            loaderUnderTest.ETagMatches = (a, b) => true;
 
             loaderUnderTest.Start(new Uri("http://microsoft.com"), TimeSpan.FromMilliseconds(1));
 

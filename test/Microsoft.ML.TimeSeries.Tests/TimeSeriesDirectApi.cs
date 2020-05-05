@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using Microsoft.ML.Data;
 using Microsoft.ML.TestFramework;
-using Microsoft.ML.TestFramework.Attributes;
 using Microsoft.ML.Transforms.TimeSeries;
 using Xunit;
 using Xunit.Abstractions;
@@ -507,7 +506,7 @@ namespace Microsoft.ML.Tests
             // The forecasted results should be the same because the state of the models
             // is the same.
             Assert.Equal(result.Forecast, resultCopy.Forecast);
-            
+
         }
 
         [Theory]
@@ -517,10 +516,10 @@ namespace Microsoft.ML.Tests
         {
             var ml = new MLContext(1);
             IDataView dataView;
-            if(loadDataFromFile)
+            if (loadDataFromFile)
             {
                 var dataPath = GetDataPath(Path.Combine("Timeseries", "anomaly_detection.csv"));
-                
+
                 // Load data from file into the dataView
                 dataView = ml.Data.LoadFromTextFile(dataPath, new[] {
                     new TextLoader.Column("Value", DataKind.Single, 0),

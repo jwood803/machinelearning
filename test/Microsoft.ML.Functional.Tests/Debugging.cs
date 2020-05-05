@@ -52,7 +52,7 @@ namespace Microsoft.ML.Functional.Tests
                         KeepPunctuations = false,
                         OutputTokensColumnName = "FeaturizeTextTokens",
                         CharFeatureExtractor = null, // new WordBagEstimator.Options { NgramLength = 0, SkipLength = -1 },
-                        WordFeatureExtractor = new WordBagEstimator.Options { NgramLength = 1},
+                        WordFeatureExtractor = new WordBagEstimator.Options { NgramLength = 1 },
                         Norm = TextFeaturizingEstimator.NormFunction.None
                     },
                     "SentimentText");
@@ -138,7 +138,7 @@ namespace Microsoft.ML.Functional.Tests
                 if (i == 0)
                     Assert.Equal("Label", column.Name);
                 else
-                    Assert.Equal(HousingRegression.Features[i-1], column.Name);
+                    Assert.Equal(HousingRegression.Features[i - 1], column.Name);
                 i++;
             }
 
@@ -148,7 +148,7 @@ namespace Microsoft.ML.Functional.Tests
                 // Validate there was data in the row by checking that some values were not zero since zero is the default.
                 var rowSum = row.MedianHomeValue;
                 foreach (var property in HousingRegression.Features)
-                    rowSum += (float) row.GetType().GetProperty(property).GetValue(row, null);
+                    rowSum += (float)row.GetType().GetProperty(property).GetValue(row, null);
 
                 Assert.NotEqual(0, rowSum);
             }
@@ -190,7 +190,8 @@ namespace Microsoft.ML.Functional.Tests
             }
         }
 
-        internal class LogWatcher {
+        internal class LogWatcher
+        {
 
             public readonly IDictionary<string, int> Lines;
 
@@ -198,7 +199,7 @@ namespace Microsoft.ML.Functional.Tests
             {
                 Lines = new Dictionary<string, int>();
             }
-            
+
             public void ObserveEvent(object sender, LoggingEventArgs e)
             {
                 if (Lines.ContainsKey(e.Message))

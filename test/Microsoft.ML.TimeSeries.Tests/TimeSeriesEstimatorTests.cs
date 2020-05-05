@@ -59,7 +59,7 @@ namespace Microsoft.ML.Tests
             for (int i = 0; i < changeHistorySize; i++)
                 data.Add(new Data(i * 100));
 
-            var pipe = new SsaChangePointEstimator(Env, "Change", 
+            var pipe = new SsaChangePointEstimator(Env, "Change",
                 confidence, changeHistorySize, maxTrainingSize, seasonalitySize, "Value");
 
             var xyData = new List<TestDataXY> { new TestDataXY() { A = new float[InputSize] } };

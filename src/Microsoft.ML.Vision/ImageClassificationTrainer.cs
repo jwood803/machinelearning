@@ -5,29 +5,21 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
 using Google.Protobuf;
 using Microsoft.ML;
 using Microsoft.ML.CommandLine;
 using Microsoft.ML.Data;
-using Microsoft.ML.Internal.Internallearn;
 using Microsoft.ML.Internal.Utilities;
 using Microsoft.ML.Runtime;
 using Microsoft.ML.TensorFlow;
 using Microsoft.ML.Trainers;
-using Microsoft.ML.Transforms;
 using Microsoft.ML.Vision;
 using Tensorflow;
 using Tensorflow.Summaries;
-using static Microsoft.ML.Data.TextLoader;
 using static Microsoft.ML.TensorFlow.TensorFlowUtils;
 using static Tensorflow.Binding;
-using Column = Microsoft.ML.Data.TextLoader.Column;
 
 [assembly: LoadableClass(ImageClassificationTrainer.Summary, typeof(ImageClassificationTrainer),
     typeof(ImageClassificationTrainer.Options),
@@ -700,7 +692,7 @@ namespace Microsoft.ML.Vision
                 generateValidationSet = needValidationSet && !validationSetPresent;
             }
 
-            if(generateValidationSet && _options.ReuseTrainSetBottleneckCachedValues &&
+            if (generateValidationSet && _options.ReuseTrainSetBottleneckCachedValues &&
                 !_options.ReuseValidationSetBottleneckCachedValues)
             {
                 // Not sure if it makes sense to support this scenario.
@@ -1073,7 +1065,7 @@ namespace Microsoft.ML.Vision
             Stream trainSetFeatureReader, byte[] labelBufferBytes, byte[] featuresBufferBytes,
             int labelBufferSizeInBytes, int featureBufferSizeInBytes, int featureFileRecordSize,
             LearningRateScheduler learningRateScheduler, DnnTrainState trainState, Runner runner,
-            IntPtr featureBufferPtr, IntPtr labelBufferPtr, Action<Tensor[],ImageClassificationMetrics> metricsAggregator)
+            IntPtr featureBufferPtr, IntPtr labelBufferPtr, Action<Tensor[], ImageClassificationMetrics> metricsAggregator)
         {
             int labelFileBytesRead;
             int featuresFileBytesRead;
@@ -1129,7 +1121,7 @@ namespace Microsoft.ML.Vision
             {
                 Host.CheckAlive();
             }
-            catch(OperationCanceledException)
+            catch (OperationCanceledException)
             {
                 TryCleanupTemporaryWorkspace();
                 throw;

@@ -45,7 +45,7 @@ namespace Samples.Dynamic
             // Map column "data_0" to column "softmaxout_1"
             var pipeline = mlContext.Transforms.ExtractPixels("data_0", "Image")
                 .Append(mlContext.Transforms.ApplyOnnxModel("softmaxout_1",
-                "data_0", modelPath)); 
+                "data_0", modelPath));
 
             var model = pipeline.Fit(dataView);
             var onnx = model.Transform(dataView);
@@ -65,7 +65,7 @@ namespace Samples.Dynamic
             {
                 var firstClassProb = dataPoint.Scores.First();
                 var lastClassProb = dataPoint.Scores.Last();
-                Console.WriteLine("The probability of being the first class is " + 
+                Console.WriteLine("The probability of being the first class is " +
                     (firstClassProb * 100) + "%.");
 
                 Console.WriteLine($"The probability of being the last class is " +

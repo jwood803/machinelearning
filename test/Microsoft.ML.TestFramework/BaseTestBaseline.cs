@@ -603,7 +603,7 @@ namespace Microsoft.ML.RunTests
             return true;
         }
 
-        public bool CompareNumbersWithTolerance(double expected, double actual, int? iterationOnCollection = null, 
+        public bool CompareNumbersWithTolerance(double expected, double actual, int? iterationOnCollection = null,
             int digitsOfPrecision = DigitsOfPrecision, bool logFailure = true)
         {
             if (double.IsNaN(expected) && double.IsNaN(actual))
@@ -636,7 +636,7 @@ namespace Microsoft.ML.RunTests
             {
                 var message = iterationOnCollection != null ? "" : $"Output and baseline mismatch at line {iterationOnCollection}." + Environment.NewLine;
 
-                if(logFailure)
+                if (logFailure)
                     Fail(message +
                             $"Values to compare are {expected} and {actual}" + Environment.NewLine +
                             $"\t AllowedVariance: {allowedVariance}" + Environment.NewLine +

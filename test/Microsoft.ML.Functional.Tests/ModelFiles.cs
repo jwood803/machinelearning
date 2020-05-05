@@ -110,7 +110,7 @@ namespace Microsoft.ML.Functional.Tests
                 serializedModel = mlContext.Model.Load(file, out var serializedSchema);
                 TestCommon.CheckSameSchemas(data.Schema, serializedSchema);
             }
-            
+
             // Create prediction engine and test predictions.
             var originalPredictionEngine = mlContext.Model.CreatePredictionEngine<HousingRegression, ScoreColumn>(model);
             var serializedPredictionEngine = mlContext.Model.CreatePredictionEngine<HousingRegression, ScoreColumn>(serializedModel);
@@ -238,7 +238,7 @@ namespace Microsoft.ML.Functional.Tests
             DataViewSchema dataViewSchema;
             trainedModel = mlContext.Model.Load(TestCommon.GetDataPath(DataDir, "backcompat", "modelwithoptionalcolumntransform.zip"), out dataViewSchema);
             var model = mlContext.Model.CreatePredictionEngine<ModelInput, ModelOutput>(trainedModel, inputSchemaDefinition: inputSchemaDefinition);
-            var prediction = model.Predict(new ModelInput() { CategoricalFeatures = new[] { "ABC", "ABC", "ABC", "ABC", "ABC" }, NumericalFeatures = new float [] { 1, 1, 1 } });
+            var prediction = model.Predict(new ModelInput() { CategoricalFeatures = new[] { "ABC", "ABC", "ABC", "ABC", "ABC" }, NumericalFeatures = new float[] { 1, 1, 1 } });
 
             Assert.Equal(1, prediction.Score[0]);
         }

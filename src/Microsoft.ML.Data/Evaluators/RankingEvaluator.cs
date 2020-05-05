@@ -702,7 +702,7 @@ namespace Microsoft.ML.Data
                 int truncationLevel, Double[] labelGains)
                 : base(env, input, labelCol, scoreCol, groupCol, RegistrationName)
             {
-                Host.CheckParam(0 < truncationLevel , nameof(truncationLevel),
+                Host.CheckParam(0 < truncationLevel, nameof(truncationLevel),
                     "Truncation level must be greater than 0");
                 Host.CheckValue(labelGains, nameof(labelGains));
 

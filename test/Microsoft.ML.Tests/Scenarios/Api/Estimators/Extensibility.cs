@@ -5,7 +5,6 @@
 using System;
 using System.Linq;
 using Microsoft.ML.Data;
-using Microsoft.ML.RunTests;
 using Microsoft.ML.TestFrameworkCommon;
 using Microsoft.ML.Trainers;
 using Microsoft.ML.Transforms;
@@ -38,7 +37,7 @@ namespace Microsoft.ML.Tests.Scenarios.Api
                 j.SepalLength = i.SepalLength;
                 j.SepalWidth = i.SepalWidth;
             };
-            var pipeline = new ColumnConcatenatingEstimator (ml, "Features", "SepalLength", "SepalWidth", "PetalLength", "PetalWidth")
+            var pipeline = new ColumnConcatenatingEstimator(ml, "Features", "SepalLength", "SepalWidth", "PetalLength", "PetalWidth")
                 .Append(new CustomMappingEstimator<IrisData, IrisData>(ml, action, null), TransformerScope.TrainTest)
                 .Append(new ValueToKeyMappingEstimator(ml, "Label"), TransformerScope.TrainTest)
                 .Append(ml.MulticlassClassification.Trainers.SdcaMaximumEntropy(

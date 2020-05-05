@@ -12,7 +12,6 @@ using Microsoft.ML.Internal.Internallearn.Test;
 using Microsoft.ML.Runtime;
 using Microsoft.ML.TestFrameworkCommon;
 using Microsoft.ML.TestFrameworkCommon.Attributes;
-using Xunit;
 using Xunit.Abstractions;
 
 namespace Microsoft.ML.TestFramework

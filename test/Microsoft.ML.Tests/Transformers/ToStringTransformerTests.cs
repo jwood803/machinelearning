@@ -2,13 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using Microsoft.ML.Featurizers;
 using Microsoft.ML.Data;
+using Microsoft.ML.Featurizers;
 using Microsoft.ML.RunTests;
-using Microsoft.ML.Transforms;
+using Microsoft.ML.TestFramework.Attributes;
 using Xunit;
 using Xunit.Abstractions;
-using Microsoft.ML.TestFramework.Attributes;
 
 namespace Microsoft.ML.Tests.Transformers
 {
@@ -80,7 +79,7 @@ namespace Microsoft.ML.Tests.Transformers
         [NotCentOS7Fact]
         public void TestBool()
         {
-            MLContext mlContext = new MLContext(1);            
+            MLContext mlContext = new MLContext(1);
             var data = new[] { new BoolInput() { data = true }, new BoolInput() { data = false } };
             IDataView input = mlContext.Data.LoadFromEnumerable(data);
             var pipeline = mlContext.Transforms.FeaturizerString("output", "data");
@@ -91,12 +90,12 @@ namespace Microsoft.ML.Tests.Transformers
             var output = model.Transform(input);
             var rows = output.Preview().RowView;
 
-            Assert.Equal("True", rows[0].Values[1].Value.ToString()); 
-            Assert.Equal("False", rows[1].Values[1].Value.ToString()); 
+            Assert.Equal("True", rows[0].Values[1].Value.ToString());
+            Assert.Equal("False", rows[1].Values[1].Value.ToString());
             Done();
         }
 
-        
+
         [NotCentOS7Fact]
         public void TestByte()
         {
@@ -112,8 +111,8 @@ namespace Microsoft.ML.Tests.Transformers
             var output = model.Transform(input);
             var rows = output.Preview().RowView;
 
-            Assert.Equal("0", rows[0].Values[1].Value.ToString()); 
-            Assert.Equal("255", rows[1].Values[1].Value.ToString()); 
+            Assert.Equal("0", rows[0].Values[1].Value.ToString());
+            Assert.Equal("255", rows[1].Values[1].Value.ToString());
             Done();
         }
 
@@ -132,11 +131,11 @@ namespace Microsoft.ML.Tests.Transformers
             var output = model.Transform(input);
             var rows = output.Preview().RowView;
 
-            Assert.Equal("-128", rows[0].Values[1].Value.ToString()); 
-            Assert.Equal("127", rows[1].Values[1].Value.ToString()); 
+            Assert.Equal("-128", rows[0].Values[1].Value.ToString());
+            Assert.Equal("127", rows[1].Values[1].Value.ToString());
             Done();
         }
-        
+
         [NotCentOS7Fact]
         public void TestUShort()
         {
@@ -152,11 +151,11 @@ namespace Microsoft.ML.Tests.Transformers
             var output = model.Transform(input);
             var rows = output.Preview().RowView;
 
-            Assert.Equal("0", rows[0].Values[1].Value.ToString()); 
-            Assert.Equal("65535", rows[1].Values[1].Value.ToString()); 
+            Assert.Equal("0", rows[0].Values[1].Value.ToString());
+            Assert.Equal("65535", rows[1].Values[1].Value.ToString());
             Done();
         }
-        
+
         [NotCentOS7Fact]
         public void TestInt()
         {
@@ -172,11 +171,11 @@ namespace Microsoft.ML.Tests.Transformers
             var output = model.Transform(input);
             var rows = output.Preview().RowView;
 
-            Assert.Equal("-2147483648", rows[0].Values[1].Value.ToString()); 
-            Assert.Equal("2147483647", rows[1].Values[1].Value.ToString()); 
+            Assert.Equal("-2147483648", rows[0].Values[1].Value.ToString());
+            Assert.Equal("2147483647", rows[1].Values[1].Value.ToString());
             Done();
         }
-        
+
         [NotCentOS7Fact]
         public void TestUInt()
         {
@@ -192,11 +191,11 @@ namespace Microsoft.ML.Tests.Transformers
             var output = model.Transform(input);
             var rows = output.Preview().RowView;
 
-            Assert.Equal("0", rows[0].Values[1].Value.ToString()); 
-            Assert.Equal("4294967295", rows[1].Values[1].Value.ToString()); 
+            Assert.Equal("0", rows[0].Values[1].Value.ToString());
+            Assert.Equal("4294967295", rows[1].Values[1].Value.ToString());
             Done();
-        }        
-        
+        }
+
         [NotCentOS7Fact]
         public void TestLong()
         {
@@ -212,8 +211,8 @@ namespace Microsoft.ML.Tests.Transformers
             var output = model.Transform(input);
             var rows = output.Preview().RowView;
 
-            Assert.Equal("-9223372036854775808", rows[0].Values[1].Value.ToString()); 
-            Assert.Equal("9223372036854775807", rows[1].Values[1].Value.ToString()); 
+            Assert.Equal("-9223372036854775808", rows[0].Values[1].Value.ToString());
+            Assert.Equal("9223372036854775807", rows[1].Values[1].Value.ToString());
             Done();
         }
 
@@ -242,7 +241,7 @@ namespace Microsoft.ML.Tests.Transformers
         {
             MLContext mlContext = new MLContext(1);
 
-            var data = new[] { new FloatInput() { data = float.MinValue}, new FloatInput() { data = float.MaxValue }, new FloatInput() { data = float.NaN } };
+            var data = new[] { new FloatInput() { data = float.MinValue }, new FloatInput() { data = float.MaxValue }, new FloatInput() { data = float.NaN } };
             IDataView input = mlContext.Data.LoadFromEnumerable(data);
             var pipeline = mlContext.Transforms.FeaturizerString("output", "data");
 
@@ -256,7 +255,7 @@ namespace Microsoft.ML.Tests.Transformers
             Assert.Equal("340282346638528859811704183484516925440.000000", rows[1].Values[1].Value.ToString());
             Done();
         }
-        
+
         [NotCentOS7Fact]
         public void TestShort()
         {
@@ -272,17 +271,17 @@ namespace Microsoft.ML.Tests.Transformers
             var output = model.Transform(input);
             var rows = output.Preview().RowView;
 
-            Assert.Equal("-32768", rows[0].Values[1].Value.ToString()); 
-            Assert.Equal("32767", rows[1].Values[1].Value.ToString()); 
+            Assert.Equal("-32768", rows[0].Values[1].Value.ToString());
+            Assert.Equal("32767", rows[1].Values[1].Value.ToString());
             Done();
         }
-        
+
         [NotCentOS7Fact]
         public void TestDouble()
         {
             MLContext mlContext = new MLContext(1);
 
-            var data = new[] { new DoubleInput() { data = double.MinValue}, new DoubleInput() { data = double.MaxValue }, new DoubleInput() { data = double.NaN } };
+            var data = new[] { new DoubleInput() { data = double.MinValue }, new DoubleInput() { data = double.MaxValue }, new DoubleInput() { data = double.NaN } };
             IDataView input = mlContext.Data.LoadFromEnumerable(data);
             var pipeline = mlContext.Transforms.FeaturizerString("data.out", "data");
 
@@ -293,7 +292,7 @@ namespace Microsoft.ML.Tests.Transformers
             var rows = output.Preview().RowView;
 
             // Since we can't set the precision yet on the Native side and it returns the whole string value, only checking the first 10 places.
-            Assert.Equal(double.MinValue.ToString("F10").Substring(0,10), rows[0].Values[1].Value.ToString().Substring(0, 10));
+            Assert.Equal(double.MinValue.ToString("F10").Substring(0, 10), rows[0].Values[1].Value.ToString().Substring(0, 10));
             Assert.Equal(double.MaxValue.ToString("F10").Substring(0, 10), rows[1].Values[1].Value.ToString().Substring(0, 10));
 
             Done();
@@ -304,7 +303,7 @@ namespace Microsoft.ML.Tests.Transformers
         {
             MLContext mlContext = new MLContext(1);
 
-            var data = new[] { new StringInput() { data = ""}, new StringInput() { data = "Long Dummy String Value" } };
+            var data = new[] { new StringInput() { data = "" }, new StringInput() { data = "Long Dummy String Value" } };
             IDataView input = mlContext.Data.LoadFromEnumerable(data);
             var pipeline = mlContext.Transforms.FeaturizerString("output", "data");
 
@@ -321,13 +320,13 @@ namespace Microsoft.ML.Tests.Transformers
 
 
         }
-        
+
         [NotCentOS7Fact]
         public void TestEntryPoint()
         {
             MLContext mlContext = new MLContext(1);
 
-            var data = new[] { new StringInput() { data = ""}, new StringInput() { data = "Long Dummy String Value" } };
+            var data = new[] { new StringInput() { data = "" }, new StringInput() { data = "Long Dummy String Value" } };
             IDataView input = mlContext.Data.LoadFromEnumerable(data);
 
             var options = new ToStringTransformerEstimator.Options()

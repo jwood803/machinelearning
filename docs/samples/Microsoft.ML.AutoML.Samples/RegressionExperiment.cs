@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using Microsoft.ML.AutoML;
 using Microsoft.ML.Data;
 
 namespace Microsoft.ML.AutoML.Samples
@@ -13,7 +12,7 @@ namespace Microsoft.ML.AutoML.Samples
         private static string ModelPath = @"<Desired model output directory goes here>\TaxiFareModel.zip";
         private static string LabelColumnName = "FareAmount";
         private static uint ExperimentTime = 60;
-        
+
         public static void Run()
         {
             MLContext mlContext = new MLContext();

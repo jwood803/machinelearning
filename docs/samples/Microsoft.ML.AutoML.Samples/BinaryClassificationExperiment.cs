@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using Microsoft.ML.AutoML;
 using Microsoft.ML.Data;
 
 namespace Microsoft.ML.AutoML.Samples

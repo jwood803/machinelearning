@@ -511,7 +511,7 @@ namespace Microsoft.ML.Transforms
                 activeCols.Add(data.Schema[srcCols[i]]);
 
                 var supervisedBinColumn = info as NormalizingEstimator.SupervisedBinningColumOptions;
-                if(supervisedBinColumn != null)
+                if (supervisedBinColumn != null)
                     activeCols.Add(data.Schema[supervisedBinColumn.LabelColumnName]);
             }
 

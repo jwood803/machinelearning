@@ -4,13 +4,12 @@
 
 using System.Linq;
 using Microsoft.ML.Data;
-using Microsoft.ML.RunTests;
 using Microsoft.ML.Trainers;
 using Xunit;
 
 namespace Microsoft.ML.Tests.TrainerEstimators
 {
-    public partial class TrainerEstimators 
+    public partial class TrainerEstimators
     {
         [Fact]
         public void SdcaWorkout()
@@ -141,7 +140,7 @@ namespace Microsoft.ML.Tests.TrainerEstimators
             bool sameScores = true;
             for (int i = 0; i < scores1.Length; i++)
             {
-                if(!CompareNumbersWithTolerance(scores1[i], scores2[i], logFailure: false))
+                if (!CompareNumbersWithTolerance(scores1[i], scores2[i], logFailure: false))
                 {
                     sameScores = false;
                     break;

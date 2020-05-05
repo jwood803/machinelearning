@@ -734,7 +734,7 @@ namespace Microsoft.ML.Trainers
         bool ISingleCanSaveOnnx.SaveAsOnnx(OnnxContext ctx, string[] outputs, string featureColumn)
         {
             // Mapping score to prediction
-            var linearRegressorOutput = ctx.AddIntermediateVariable(null,"LinearRegressorOutput",true);
+            var linearRegressorOutput = ctx.AddIntermediateVariable(null, "LinearRegressorOutput", true);
             base.SaveAsOnnx(ctx, new[] { linearRegressorOutput }, featureColumn);
             var opType = "Exp";
             ctx.CreateNode(opType, new[] { linearRegressorOutput }, outputs, ctx.GetNodeName(opType), "");

@@ -40,7 +40,7 @@ namespace Microsoft.ML.CpuMath.UnitTests
             // Small Input Size Array
             float[] testArray3 = new float[15] { 1.96f, -2.38f, -9.76f, 13.84f, -106.37f, -26.93f, 32.45f, 3.29f, 1.96f, -2.38f, -9.76f, 13.84f, -106.37f, -26.93f, 32.45f };
             _testArrays = new float[][] { testArray1, testArray2, testArray3 };
-            _testIndexArray = new int[18] { 0, 2, 5, 6, 8, 11, 12, 13, 14, 16, 18, 21, 22, 24, 26, 27, 28, 29};
+            _testIndexArray = new int[18] { 0, 2, 5, 6, 8, 11, 12, 13, 14, 16, 18, 21, 22, 24, 26, 27, 28, 29 };
             _comparer = new FloatEqualityComparer();
             _matMulComparer = new FloatEqualityComparerForMatMul();
 
@@ -197,7 +197,7 @@ namespace Microsoft.ML.CpuMath.UnitTests
                     for (int j = 0; j < src.Size; j++)
                     {
                         dotProduct += mat[i * src.Size + j] * src[j];
-                    }                    
+                    }
                     expected[i] = dotProduct;
                 }
 
@@ -446,7 +446,7 @@ namespace Microsoft.ML.CpuMath.UnitTests
         [MemberData(nameof(AddData))]
         public void AddUTest(string mode, string test, Dictionary<string, string> environmentVariables)
         {
-            RemoteExecutor.RemoteInvoke((arg0, arg1) => 
+            RemoteExecutor.RemoteInvoke((arg0, arg1) =>
             {
                 CheckProperFlag(arg0);
                 float[] src = (float[])_testArrays[int.Parse(arg1)].Clone();
@@ -468,7 +468,7 @@ namespace Microsoft.ML.CpuMath.UnitTests
                 var actual = dst;
                 Assert.Equal(expected, actual, _comparer);
                 return RemoteExecutor.SuccessExitCode;
-            }, mode, test, new RemoteInvokeOptions (environmentVariables));
+            }, mode, test, new RemoteInvokeOptions(environmentVariables));
         }
 
         [Theory]
@@ -524,7 +524,7 @@ namespace Microsoft.ML.CpuMath.UnitTests
                 CpuMathUtils.MulElementWise(src1, src2, dst, dst.Length);
                 var actual = dst;
                 Assert.Equal(expected, actual, _comparer);
-                return RemoteExecutor.SuccessExitCode; 
+                return RemoteExecutor.SuccessExitCode;
             }, mode, test, new RemoteInvokeOptions(environmentVariables));
         }
 

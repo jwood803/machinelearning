@@ -471,7 +471,7 @@ namespace Microsoft.ML
                     Column = samplingKeyColumnName,
                     Min = (double)fold / numberOfFolds,
                     Max = (double)(fold + 1) / numberOfFolds,
-                    Complement=true,
+                    Complement = true,
                     IncludeMin = true,
                     IncludeMax = true,
                 }, data);

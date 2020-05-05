@@ -65,9 +65,9 @@ namespace Samples.Dynamic
                 $"post-transformation.");
 
             Console.WriteLine("Data\tAlert\tScore\tP-Value\tMartingale value");
-            
+
             // Data Alert      Score   P-Value Martingale value
-            
+
             // Create non-anomalous data and check for change point.
             for (int index = 0; index < 8; index++)
             {

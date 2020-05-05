@@ -20,7 +20,7 @@ namespace Microsoft.ML.TestFrameworkCommon
         [Obsolete("Called by the de-serializer", true)]
         public RetryTestCase() { }
 
-        public RetryTestCase(IMessageSink diagnosticMessageSink, TestMethodDisplay testMethodDisplay, 
+        public RetryTestCase(IMessageSink diagnosticMessageSink, TestMethodDisplay testMethodDisplay,
             ITestMethod testMethod, int maxRetries)
             : base(diagnosticMessageSink, testMethodDisplay, TestMethodDisplayOptions.None, testMethod, testMethodArguments: null)
         {

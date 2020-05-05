@@ -170,7 +170,7 @@ namespace Microsoft.ML.Transforms.Onnx
         /// no longer needed.</param>
         /// <param name="shapeDictionary"></param>
         public OnnxModel(string modelFile, int? gpuDeviceId = null, bool fallbackToCpu = false,
-            bool ownModelFile=false, IDictionary<string, int[]> shapeDictionary = null)
+            bool ownModelFile = false, IDictionary<string, int[]> shapeDictionary = null)
         {
             ModelFile = modelFile;
             // If we don't own the model file, _disposed should be false to prevent deleting user's file.
@@ -184,7 +184,7 @@ namespace Microsoft.ML.Transforms.Onnx
                     _session = new InferenceSession(modelFile,
                         SessionOptions.MakeSessionOptionWithCudaProvider(gpuDeviceId.Value));
                 }
-                catch(OnnxRuntimeException)
+                catch (OnnxRuntimeException)
                 {
                     if (fallbackToCpu)
                         _session = new InferenceSession(modelFile);
@@ -302,7 +302,7 @@ namespace Microsoft.ML.Transforms.Onnx
         {
             if (left.Count() != right.Count())
                 return false;
-            foreach(var (l, r) in left.Zip(right, (l, r) => (l, r)))
+            foreach (var (l, r) in left.Zip(right, (l, r) => (l, r)))
             {
                 // Along a specific axis, if any of left or right have unknown dimension, the overwriting can happen.
                 if (l != r && l > 0 && r > 0)
@@ -416,7 +416,7 @@ namespace Microsoft.ML.Transforms.Onnx
                      typeof(SByte),
                      typeof(Byte)
                 };
-        private static Dictionary<Type, InternalDataKind> _typeToKindMap=
+        private static Dictionary<Type, InternalDataKind> _typeToKindMap =
             new Dictionary<Type, InternalDataKind>
                 {
                     { typeof(Single) , InternalDataKind.R4},
@@ -488,7 +488,7 @@ namespace Microsoft.ML.Transforms.Onnx
         public static PrimitiveDataViewType OnnxToMlNetType(Type type)
         {
             if (!_typeToKindMap.ContainsKey(type))
-               throw Contracts.ExceptNotSupp("Onnx type not supported", type);
+                throw Contracts.ExceptNotSupp("Onnx type not supported", type);
             return ColumnTypeExtensions.PrimitiveTypeFromKind(_typeToKindMap[type]);
         }
     }

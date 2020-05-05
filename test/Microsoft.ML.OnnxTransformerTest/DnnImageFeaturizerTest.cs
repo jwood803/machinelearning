@@ -9,7 +9,6 @@ using System.Linq;
 using Microsoft.ML.Data;
 using Microsoft.ML.Model;
 using Microsoft.ML.RunTests;
-using Microsoft.ML.TestFramework.Attributes;
 using Microsoft.ML.TestFrameworkCommon.Attributes;
 using Xunit;
 using Xunit.Abstractions;
@@ -218,14 +217,14 @@ namespace Microsoft.ML.Tests
                                 allowQuoting: true,
                                 allowSparse: false);
 
-           var dataProcessPipeline = ML.Transforms.Conversion.MapValueToKey("Label", "Label")
-                                     .Append(ML.Transforms.LoadImages("ImagePath_featurized", imageFolder, "ImagePath"))
-                                     .Append(ML.Transforms.ResizeImages("ImagePath_featurized", 224, 224, "ImagePath_featurized"))
-                                     .Append(ML.Transforms.ExtractPixels("ImagePath_featurized", "ImagePath_featurized"))
-                                     .Append(ML.Transforms.DnnFeaturizeImage("ImagePath_featurized", m => m.ModelSelector.ResNet18(m.Environment, m.OutputColumn, m.InputColumn), "ImagePath_featurized"))
-                                     .Append(ML.Transforms.Concatenate("Features", new[] { "ImagePath_featurized" }))
-                                     .Append(ML.Transforms.NormalizeMinMax("Features", "Features"))
-                                     .AppendCacheCheckpoint(ML);
+            var dataProcessPipeline = ML.Transforms.Conversion.MapValueToKey("Label", "Label")
+                                      .Append(ML.Transforms.LoadImages("ImagePath_featurized", imageFolder, "ImagePath"))
+                                      .Append(ML.Transforms.ResizeImages("ImagePath_featurized", 224, 224, "ImagePath_featurized"))
+                                      .Append(ML.Transforms.ExtractPixels("ImagePath_featurized", "ImagePath_featurized"))
+                                      .Append(ML.Transforms.DnnFeaturizeImage("ImagePath_featurized", m => m.ModelSelector.ResNet18(m.Environment, m.OutputColumn, m.InputColumn), "ImagePath_featurized"))
+                                      .Append(ML.Transforms.Concatenate("Features", new[] { "ImagePath_featurized" }))
+                                      .Append(ML.Transforms.NormalizeMinMax("Features", "Features"))
+                                      .AppendCacheCheckpoint(ML);
 
             var trainer = ML.MulticlassClassification.Trainers.OneVersusAll(ML.BinaryClassification.Trainers.AveragedPerceptron(labelColumnName: "Label", numberOfIterations: 10, featureColumnName: "Features"), labelColumnName: "Label")
                                       .Append(ML.Transforms.Conversion.MapKeyToValue("PredictedLabel", "PredictedLabel"));

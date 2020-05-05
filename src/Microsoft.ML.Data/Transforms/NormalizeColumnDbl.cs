@@ -1102,7 +1102,7 @@ namespace Microsoft.ML.Transforms
                     }
 
                     public override NormalizingTransformer.NormalizerModelParametersBase GetNormalizerModelParams()
-                         => new NormalizingTransformer.BinNormalizerModelParameters<TFloat>(ImmutableArray.Create(_binUpperBounds), _den,_offset);
+                         => new NormalizingTransformer.BinNormalizerModelParameters<TFloat>(ImmutableArray.Create(_binUpperBounds), _den, _offset);
                 }
 
                 public sealed class ImplVec : BinColumnFunction

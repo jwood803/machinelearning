@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
@@ -365,7 +364,7 @@ namespace Microsoft.ML.Data
                                 Array.Clear(_values, _count, _values.Length - _count);
                             Array.Resize(ref _values, _size);
                         }
-                        for (int ii = _count; --ii >= 0; )
+                        for (int ii = _count; --ii >= 0;)
                         {
                             int i = _indices[ii];
                             Contracts.Assert(ii <= i);

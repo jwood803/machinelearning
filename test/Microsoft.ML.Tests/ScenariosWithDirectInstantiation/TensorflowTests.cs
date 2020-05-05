@@ -4,28 +4,25 @@
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
 using Microsoft.ML.Data;
-using Microsoft.ML.Vision;
-using Microsoft.ML.RunTests;
+using Microsoft.ML.Internal.Utilities;
+using Microsoft.ML.TensorFlow;
 using Microsoft.ML.TestFramework;
 using Microsoft.ML.TestFramework.Attributes;
 using Microsoft.ML.TestFrameworkCommon;
+using Microsoft.ML.Trainers;
 using Microsoft.ML.Transforms;
 using Microsoft.ML.Transforms.Image;
-using Microsoft.ML.TensorFlow;
-using InMemoryImage = Microsoft.ML.Tests.ImageTests.InMemoryImage;
+using Microsoft.ML.Vision;
 using Xunit;
 using Xunit.Abstractions;
 using static Microsoft.ML.DataOperationsCatalog;
-using Microsoft.ML.Trainers;
-using Microsoft.ML.TestFrameworkCommon.Attributes;
-using Microsoft.ML.Internal.Utilities;
+using InMemoryImage = Microsoft.ML.Tests.ImageTests.InMemoryImage;
 
 namespace Microsoft.ML.Scenarios
 {

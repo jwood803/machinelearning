@@ -280,23 +280,23 @@ namespace Microsoft.ML.Data.IO
             sep = sep.ToLowerInvariant();
             switch (sep)
             {
-            case "space":
-            case " ":
-                return ' ';
-            case "tab":
-            case "\t":
-                return '\t';
-            case "comma":
-            case ",":
-                return ',';
-            case "semicolon":
-            case ";":
-                return ';';
-            case "bar":
-            case "|":
-                return '|';
-            default:
-                throw Contracts.ExceptUserArg(nameof(Arguments.Separator), "Invalid separator - must be: space, tab, comma, semicolon, or bar");
+                case "space":
+                case " ":
+                    return ' ';
+                case "tab":
+                case "\t":
+                    return '\t';
+                case "comma":
+                case ",":
+                    return ',';
+                case "semicolon":
+                case ";":
+                    return ';';
+                case "bar":
+                case "|":
+                    return '|';
+                default:
+                    throw Contracts.ExceptUserArg(nameof(Arguments.Separator), "Invalid separator - must be: space, tab, comma, semicolon, or bar");
             }
         }
 
@@ -307,19 +307,19 @@ namespace Microsoft.ML.Data.IO
         {
             switch (separator)
             {
-            case ' ':
-                return "space";
-            case '\t':
-                return "tab";
-            case ',':
-                return "comma";
-            case ';':
-                return "semicolon";
-            case '|':
-                return "bar";
+                case ' ':
+                    return "space";
+                case '\t':
+                    return "tab";
+                case ',':
+                    return "comma";
+                case ';':
+                    return "semicolon";
+                case '|':
+                    return "bar";
 
-            default:
-                return separator.ToString();
+                default:
+                    return separator.ToString();
             }
         }
 

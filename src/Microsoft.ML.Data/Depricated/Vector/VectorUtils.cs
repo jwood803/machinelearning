@@ -276,7 +276,7 @@ namespace Microsoft.ML.Numeric
                     return result;
                 }
                 var bIndices = b.GetIndices();
-                for (int iA = aMin, iB = 0; iA < aLim && iB < bIndices.Length; )
+                for (int iA = aMin, iB = 0; iA < aLim && iB < bIndices.Length;)
                 {
                     int aIndex = aIndices[iA];
                     int bIndex = bIndices[iB];

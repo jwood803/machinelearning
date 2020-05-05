@@ -238,7 +238,7 @@ namespace Microsoft.ML.TestFrameworkCommon
 
             Assert.False(size > int.MaxValue, $"{nameof(KeyDataViewType)}.{nameof(KeyDataViewType.Count)} is larger than int.MaxValue");
             Assert.True(EqualTypes(t1, t2, exactTypes), $"Different {kind} metadata types: {t1} vs {t2}");
-            
+
             if (!(t1.GetItemType() is TextDataViewType))
             {
                 if (!mustBeText)
@@ -261,7 +261,7 @@ namespace Microsoft.ML.TestFrameworkCommon
             try
             {
                 sch[col].Annotations.GetValue(kind, ref names);
-                
+
                 return false;
             }
             catch (InvalidOperationException ex)

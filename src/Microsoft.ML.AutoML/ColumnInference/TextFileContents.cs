@@ -53,9 +53,9 @@ namespace Microsoft.ML.AutoML
             var foundAny = false;
             var result = default(ColumnSplitResult);
             foreach (var perm in (from _allowSparse in sparse
-                                    from _allowQuote in quote
-                                    from _sep in separatorCandidates
-                                    select new { _allowSparse, _allowQuote, _sep }))
+                                  from _allowQuote in quote
+                                  from _sep in separatorCandidates
+                                  select new { _allowSparse, _allowQuote, _sep }))
             {
                 var options = new TextLoader.Options
                 {
@@ -115,7 +115,7 @@ namespace Microsoft.ML.AutoML
                 return true;
             }
             // fail gracefully if unable to instantiate data view with swept arguments
-            catch(Exception)
+            catch (Exception)
             {
                 return false;
             }

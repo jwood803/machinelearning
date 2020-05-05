@@ -19,7 +19,6 @@ using Microsoft.ML.Model.OnnxConverter;
 using Microsoft.ML.Runtime;
 using Microsoft.ML.TestFramework.Attributes;
 using Microsoft.ML.TestFrameworkCommon;
-using Microsoft.ML.TestFrameworkCommon.Attributes;
 using Microsoft.ML.Trainers;
 using Microsoft.ML.Trainers.Ensemble;
 using Microsoft.ML.Trainers.FastTree;
@@ -1194,7 +1193,7 @@ namespace Microsoft.ML.RunTests
             var args = new ExecuteGraphCommand.Arguments() { GraphPath = jsonPath };
             var cmd = new ExecuteGraphCommand(Env, args);
             cmd.Run();
-                        
+
             var mlContext = new MLContext(1);
             var loadedData = mlContext.Data.LoadFromBinary(outputDataPath);
             Assert.NotNull(loadedData.Schema.GetColumnOrNull("FeatureName"));
@@ -1805,7 +1804,8 @@ namespace Microsoft.ML.RunTests
                 if (i % 2 == 0)
                 {
                     data = new TextFeaturizingEstimator(Env, "Features", new List<string> { "Text" },
-                        new TextFeaturizingEstimator.Options {
+                        new TextFeaturizingEstimator.Options
+                        {
                             StopWordsRemoverOptions = new StopWordsRemovingEstimator.Options(),
                         }).Fit(data).Transform(data);
                 }

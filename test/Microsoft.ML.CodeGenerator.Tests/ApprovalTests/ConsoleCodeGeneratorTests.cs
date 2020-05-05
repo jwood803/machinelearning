@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using ApprovalTests;
@@ -11,7 +10,6 @@ using ApprovalTests.Reporters;
 using Microsoft.ML;
 using Microsoft.ML.AutoML;
 using Microsoft.ML.CodeGenerator;
-using Microsoft.ML.CodeGenerator.CodeGenerator;
 using Microsoft.ML.CodeGenerator.CodeGenerator.CSharp;
 using Microsoft.ML.CodeGenerator.CodeGenerator.CSharp.AzureCodeGenerator;
 using Microsoft.ML.CodeGenerator.CSharp;
@@ -214,12 +212,12 @@ namespace mlnet.Tests
                 OnnxModelPath = @"/path/to/onnxModel",
                 IsAzureAttach = true,
                 IsImage = true,
-                ClassificationLabel = new string[] {"label1", "label2", "label3"},
+                ClassificationLabel = new string[] { "label1", "label2", "label3" },
             };
             var codeGen = new AzureAttachCodeGenenrator(pipeline, columnInference, setting);
             foreach (var project in codeGen.ToSolution())
             {
-                foreach(var projectFile in project)
+                foreach (var projectFile in project)
                 {
                     NamerFactory.AdditionalInformation = projectFile.Name;
                     Approvals.Verify(((ICSharpFile)projectFile).File);
@@ -512,7 +510,8 @@ namespace mlnet.Tests
                 this._columnInference = new ColumnInferenceResults()
                 {
                     TextLoaderOptions = textLoaderArgs,
-                    ColumnInformation = new ColumnInformation() {
+                    ColumnInformation = new ColumnInformation()
+                    {
                         LabelColumnName = "Label",
                         UserIdColumnName = "userId",
                         ItemIdColumnName = "movieId"

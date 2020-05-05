@@ -1262,7 +1262,7 @@ namespace Microsoft.ML.Transforms
                             _binUpperBounds.Select(b => ImmutableArray.Create(b)).ToImmutableArray(),
                             ImmutableArray.Create(_den),
                             ImmutableArray.Create(_offset));
-            }
+                }
             }
         }
 
